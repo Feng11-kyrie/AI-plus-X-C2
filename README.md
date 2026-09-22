@@ -9,6 +9,11 @@
 | 截止 | **2026-12-31 23:59** |
 | 难度 / 周期 | 进阶 · 建议 5 天 · 单人 |
 | 论文标题 | From Natural Language to Verifiable Reasoning: A Semantic Reduction Framework for Reliable AI Mathematics |
+| 代码仓库 | <https://github.com/Feng11-kyrie/AI-plus-X-C2>（**Private**，仅本人可见） |
+
+```bash
+git clone git@github.com:Feng11-kyrie/AI-plus-X-C2.git
+```
 
 ---
 
