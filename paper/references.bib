@@ -1,0 +1,123 @@
+% ============================================================
+% references.bib -- C2 AI4Math 论文
+% 全部条目均经人工核验（来源见 docs/02-文献核验记录.md）
+% 红线提醒：引用造假 = 研究严谨性 0 分，禁止新增未经核验的条目
+% ============================================================
+
+% ---------- 一手文献：AI 数学能力 ----------
+@article{trinh2024alphageometry,
+  title   = {Solving olympiad geometry without human demonstrations},
+  author  = {Trinh, Trieu H. and Wu, Yuhuai and Le, Quoc V. and He, He and Luong, Thang},
+  journal = {Nature},
+  volume  = {625},
+  number  = {7995},
+  pages   = {476--482},
+  year    = {2024},
+  doi     = {10.1038/s41586-023-06747-5}
+}
+
+@article{davies2021advancing,
+  title   = {Advancing mathematics by guiding human intuition with AI},
+  author  = {Davies, Alex and Veli{\v{c}}kovi{\'c}, Petar and Buesing, Lars and Blackwell, Sam
+             and Zheng, Daniel and Toma{\v{s}}ev, Nenad and Tanburn, Richard and Battaglia, Peter
+             and Blundell, Charles and Juh{\'a}sz, Andr{\'a}s and Lackenby, Marc and Williamson, Geordie
+             and Hassabis, Demis and Kohli, Pushmeet},
+  journal = {Nature},
+  volume  = {600},
+  number  = {7887},
+  pages   = {70--74},
+  year    = {2021},
+  doi     = {10.1038/s41586-021-04086-x}
+}
+
+@article{romera2024funsearch,
+  title   = {Mathematical discoveries from program search with large language models},
+  author  = {Romera-Paredes, Bernardino and Barekatain, Mohammadamin and Novikov, Alexander
+             and Balog, Matej and Kumar, M. Pawan and Dupont, Emilien and Ruiz, Francisco J. R.
+             and Ellenberg, Jordan S. and Wang, Pengming and Fawzi, Omar and Kohli, Pushmeet
+             and Fawzi, Alhussein},
+  journal = {Nature},
+  volume  = {625},
+  number  = {7995},
+  pages   = {468--475},
+  year    = {2024},
+  doi     = {10.1038/s41586-023-06924-6}
+}
+
+% ---------- 基准与数据集 ----------
+@article{cobbe2021gsm8k,
+  title   = {Training Verifiers to Solve Math Word Problems},
+  author  = {Cobbe, Karl and Kosaraju, Vineet and Bavarian, Mohammad and Chen, Mark
+             and Jun, Heewoo and Kaiser, Lukasz and Plappert, Matthias and Tworek, Jerry
+             and Hilton, Jacob and Nakano, Reiichiro and Hesse, Christopher and Schulman, John},
+  journal = {arXiv preprint arXiv:2110.14168},
+  year    = {2021}
+}
+
+@inproceedings{hendrycks2021math,
+  title     = {Measuring Mathematical Problem Solving With the {MATH} Dataset},
+  author    = {Hendrycks, Dan and Burns, Collin and Kadavath, Saurav and Arora, Akul
+               and Basart, Steven and Tang, Eric and Song, Dawn and Steinhardt, Jacob},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year      = {2021}
+}
+
+@inproceedings{zheng2022minif2f,
+  title     = {{miniF2F}: a cross-system benchmark for formal {O}lympiad-level mathematics},
+  author    = {Zheng, Kunhao and Han, Jesse Michael and Polu, Stanislas},
+  booktitle = {International Conference on Learning Representations (ICLR)},
+  year      = {2022}
+}
+
+% ---------- 形式化验证基础设施 ----------
+@inproceedings{moura2021lean4,
+  title     = {The {Lean} 4 Theorem Prover and Programming Language},
+  author    = {de Moura, Leonardo and Ullrich, Sebastian},
+  booktitle = {Automated Deduction -- CADE 28},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {12699},
+  pages     = {625--635},
+  year      = {2021},
+  publisher = {Springer},
+  doi       = {10.1007/978-3-030-79876-5_37}
+}
+
+@inproceedings{mathlib2020,
+  title     = {The {Lean} Mathematical Library},
+  author    = {{The mathlib Community}},
+  booktitle = {Proceedings of the 9th ACM SIGPLAN International Conference on
+               Certified Programs and Proofs (CPP)},
+  pages     = {367--381},
+  year      = {2020},
+  publisher = {ACM},
+  doi       = {10.1145/3372885.3373824}
+}
+
+% ---------- 推理与过程监督 ----------
+@inproceedings{wei2022chain,
+  title     = {Chain-of-Thought Prompting Elicits Reasoning in Large Language Models},
+  author    = {Wei, Jason and Wang, Xuezhi and Schuurmans, Dale and Bosma, Maarten
+               and Ichter, Brian and Xia, Fei and Chi, Ed and Le, Quoc and Zhou, Denny},
+  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+  year      = {2022}
+}
+
+@article{lightman2023lets,
+  title   = {Let's Verify Step by Step},
+  author  = {Lightman, Hunter and Kosaraju, Vineet and Burda, Yura and Edwards, Harri
+             and Baker, Bowen and Lee, Teddy and Leike, Jan and Schulman, John
+             and Sutskever, Ilya and Cobbe, Karl},
+  journal = {arXiv preprint arXiv:2305.20050},
+  year    = {2023}
+}
+
+% ---------- 神经符号求解（来自讲义参考文献 [25]，已核验） ----------
+@article{raissi2019pinn,
+  title   = {Physics-informed neural networks: A deep learning framework for solving
+             forward and inverse problems involving nonlinear partial differential equations},
+  author  = {Raissi, Maziar and Perdikaris, Paris and Karniadakis, George Em},
+  journal = {Journal of Computational Physics},
+  volume  = {378},
+  pages   = {686--707},
+  year    = {2019}
+}

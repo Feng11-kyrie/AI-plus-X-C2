@@ -1,0 +1,223 @@
+% ============================================================
+% C2 Challenge: AI for Math  --  paper.tex
+% From Natural Language to Verifiable Reasoning:
+% A Semantic Reduction Framework for Reliable AI Mathematics
+%
+% 编译：pdflatex paper.tex && bibtex paper && pdflatex paper.tex && pdflatex paper.tex
+% 要求：可独立编译，引用可解析。references.bib 中 11 篇全部经人工核验。
+% ============================================================
+
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+\title{From Natural Language to Verifiable Reasoning:\\
+A Semantic Reduction Framework for Reliable AI Mathematics}
+
+\author{Feng Shuo}
+
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% ------------------------------------------------------------
+\begin{abstract}
+Large language models produce mathematical arguments that are fluent but not
+trustworthy: a proof may read correctly and still be wrong.  We argue that this
+failure is not primarily a failure of generation, nor of verification, but of
+the \emph{middle layer} that connects them.  We decompose an AI4Math system into
+three layers --- generation, semantic reduction, and verification --- and show
+that the second layer is the actual bottleneck: verification can only operate on
+computable objects, and natural language is not one.  We propose a structured
+typed intermediate representation (Typed IR) as the core system component, and
+sketch an evaluation protocol that reports \emph{verifiability} alongside
+accuracy.  We do not claim a new solver; we claim a sharper decomposition and a
+measurable target.
+
+\noindent\textbf{Keywords:} AI for mathematics, formal verification, semantic
+reduction, neuro-symbolic systems, reliability
+\end{abstract}
+
+% ------------------------------------------------------------
+\section{Introduction}
+
+Machine learning has entered core mathematical practice.  Neural models guided
+human intuition toward new results in knot theory and representation
+theory~\cite{davies2021advancing}; an evolutionary procedure paired with a
+program evaluator discovered new cap-set constructions beyond the best known
+ones~\cite{romera2024funsearch}; and a neuro-symbolic system solved 25 of 30
+olympiad geometry problems~\cite{trinh2024alphageometry}.
+
+Yet these successes sit next to an uncomfortable observation.  Language models
+regularly emit reasoning chains that are locally plausible and globally
+wrong~\cite{wei2022chain}.  On competition-level benchmarks such as
+MATH~\cite{hendrycks2021math} and GSM8K~\cite{cobbe2021gsm8k}, a correct final
+answer does not certify a correct derivation.  Process supervision, which labels
+intermediate steps rather than only outcomes, improves
+reliability~\cite{lightman2023lets} --- but it is expensive precisely because
+there is no machine-checkable handle on an intermediate step written in natural
+language.
+
+\textbf{Claim.}  Reliability cannot be bought by final-answer verification
+alone.  It requires an explicit \emph{semantic reduction layer} that maps
+natural-language reasoning into a structured object a verifier can act on.
+
+\paragraph{Contributions.}
+\begin{enumerate}
+  \item A three-layer decomposition of AI4Math systems that isolates semantic
+        reduction as a first-class component.
+  \item An argument that most observed failures concentrate in that layer, not
+        in generation or verification.
+  \item A proposed Typed IR design with bidirectional consistency requirements,
+        plus an evaluation protocol reporting verifiability in addition to
+        accuracy.
+\end{enumerate}
+
+% ------------------------------------------------------------
+\section{A Three-Layer Decomposition}
+
+Let an AI4Math system be decomposed as $G \to R \to V$:
+
+\subsection{Layer 1: Generation}
+A language model emits a natural-language reasoning chain, typically via
+chain-of-thought prompting~\cite{wei2022chain}.  Its output is
+probabilistic, untyped, and semantically underspecified.
+
+\subsection{Layer 2: Semantic Reduction}
+Natural language is mapped to a structured representation: first- or
+higher-order logic expressions, executable programs, proof objects, or a typed
+intermediate representation.  The theoretical anchor is the Curry--Howard
+correspondence.  Three failure modes dominate here:
+\begin{itemize}
+  \item \textbf{Ambiguity}: the same sentence admits several formal readings.
+  \item \textbf{Missing typing}: implicit domains, coercions, and side
+        conditions are silently dropped.
+  \item \textbf{Non-invertibility}: the mapping loses information, so a
+        verified object cannot be faithfully rendered back.
+\end{itemize}
+
+\subsection{Layer 3: Verification}
+A formal system checks self-consistency, derivability, factual grounding, and
+constraint satisfaction.  In practice this is an interactive theorem prover such
+as Lean~4~\cite{moura2021lean4} over the mathlib
+library~\cite{mathlib2020}, or a symbolic/SMT solver.  The cross-system
+benchmark miniF2F~\cite{zheng2022minif2f} shows that this layer is now
+measurable and comparable across provers.
+
+% ------------------------------------------------------------
+\section{The Semantic Reduction Bottleneck}
+
+We claim that when an AI4Math system fails, it fails in Layer~2 more often than
+in Layers~1 or~3.
+
+The argument is structural.  Verification is only defined over objects with a
+decidable notion of well-formedness.  Natural language has none.  Therefore, if
+Layer~2 produces no object, or produces an object that does not faithfully encode
+the intended claim, then Layer~3 has nothing to check --- or checks the wrong
+thing.  Two consequences follow:
+\begin{enumerate}
+  \item \textbf{Verification failure}: the pipeline reports ``unverified''
+        rather than ``wrong'', conflating a translation failure with a
+        reasoning failure.
+  \item \textbf{Undetectable hallucination}: an unfaithful translation can be
+        internally consistent and still prove a proposition different from the
+        one that was asked.
+\end{enumerate}
+
+This reframes the reliability problem: the scarce resource is not the prover's
+power but the \emph{fidelity of the translation}.
+
+% ------------------------------------------------------------
+\section{Proposed Framework}
+
+\subsection{Structured Intermediate Representation}
+We propose a typed IR with four components: a type system, an operational
+semantics, a constraint system, and a composable graph/AST structure.
+
+\subsection{Pipeline}
+The standard flow becomes
+\[
+\text{Natural language} \;\to\; \text{Typed IR} \;\to\;
+\text{Formal verification} \;\to\; \text{Natural-language rendering},
+\]
+where natural language is the \emph{interface} and the typed IR is the
+\emph{kernel}.
+
+\subsection{Bidirectional Consistency}
+We require $\text{IR} \leftrightarrow \text{natural language}$ to be both
+interpretable and traceable: every IR node records the span it came from, and
+every rendered sentence records the node it came from.  This is the property
+that makes a human audit possible.
+
+% ------------------------------------------------------------
+\section{Related Work}
+
+\textbf{Generation-side.}  Chain-of-thought~\cite{wei2022chain} and
+process supervision~\cite{lightman2023lets} improve step quality but leave the
+steps unverifiable.
+
+\textbf{Verification-side.}  Neuro-symbolic theorem
+proving~\cite{trinh2024alphageometry,zheng2022minif2f} and the Lean/mathlib
+ecosystem~\cite{moura2021lean4,mathlib2020} provide sound kernels, but assume a
+formal statement already exists.
+
+\textbf{Search-side.}  Program-search methods~\cite{romera2024funsearch} and
+ML-guided intuition~\cite{davies2021advancing} sidestep verification by using
+an evaluator as a filter --- effective where an evaluator exists, silent where
+it does not.
+
+\textbf{Difference.}  We treat semantic reduction as the core system component,
+not as preprocessing, and we make its fidelity a reported metric.
+
+% ------------------------------------------------------------
+\section{Experimental Design}
+
+\textbf{Benchmarks.}  GSM8K~\cite{cobbe2021gsm8k} and
+MATH~\cite{hendrycks2021math} for informal reasoning; miniF2F~\cite{zheng2022minif2f}
+for formal proving.
+
+\textbf{Comparison.}  Pure LLM baseline versus IR-based pipeline.
+
+\textbf{Metrics.}  Beyond accuracy we report:
+\begin{itemize}
+  \item \emph{Verifiability rate}: fraction of outputs that yield a
+        machine-checkable object.
+  \item \emph{Consistency}: agreement between the rendered statement and the
+        verified statement.
+\end{itemize}
+
+We note honestly that this design is a proposal, not a completed experiment;
+running it requires engineering effort beyond the scope of the present
+write-up.
+
+% ------------------------------------------------------------
+\section{Discussion}
+
+\textbf{Limitations.}  IR design is expensive; semantic mapping cost may exceed
+the cost of the proof it enables; and the framework is silent on conjectures
+that cannot be stated in the target logic at all.
+
+\textbf{Extensions.}  The same decomposition should apply to general reasoning
+systems and to agent architectures, where the ``verifier'' may be an external
+tool rather than a proof kernel.
+
+% ------------------------------------------------------------
+\section{Conclusion}
+
+Reliable AI reasoning requires generation, semantic reduction, and
+verification together.  The contribution is to name the middle term, argue that
+it is the bottleneck, and propose a measurable notion of verifiability that
+makes the claim testable rather than rhetorical.
+
+% ------------------------------------------------------------
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}

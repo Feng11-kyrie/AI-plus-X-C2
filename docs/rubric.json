@@ -1,0 +1,104 @@
+{
+  "version": 1,
+  "challenge_id": "C2",
+  "dimensions": [
+    {
+      "id": "researchRigor",
+      "label": "研究严谨性",
+      "description": "文献、论证与结论的严谨程度",
+      "signals": [
+        "文献真实可查",
+        "论证有据",
+        "结论有边界"
+      ],
+      "negativeSignals": [
+        "引用造假",
+        "凭空断言"
+      ],
+      "maxPoints": 25
+    },
+    {
+      "id": "technicalExecution",
+      "label": "技术实现",
+      "description": "技术方案合理性与工程质量",
+      "signals": [
+        "代码规范",
+        "Git提交清晰",
+        "架构设计"
+      ],
+      "negativeSignals": [
+        "硬编码",
+        "代码混乱",
+        "无法运行"
+      ],
+      "maxPoints": 20
+    },
+    {
+      "id": "artifactCompleteness",
+      "label": "产物完整性",
+      "description": "交付物是否齐全、可运行、可独立使用",
+      "signals": [
+        "README齐全",
+        "可运行",
+        "安装/使用说明"
+      ],
+      "negativeSignals": [
+        "文件为空",
+        "缺少核心交付物"
+      ],
+      "maxPoints": 15
+    },
+    {
+      "id": "aiUsage",
+      "label": "AI使用质量",
+      "description": "AI 工具使用是否恰当、有效、可追溯",
+      "signals": [
+        "多轮迭代",
+        "prompt优化",
+        "工作流设计",
+        "AI日志佐证"
+      ],
+      "negativeSignals": [
+        "一句话指令直接提交",
+        "没有AI使用记录"
+      ],
+      "maxPoints": 20
+    },
+    {
+      "id": "reflectionQuality",
+      "label": "复盘质量",
+      "description": "AAR 反思是否深入、有洞察、有改进方案",
+      "signals": [
+        "具体问题分析",
+        "有改进方案",
+        "记录迭代过程",
+        "含失败经验"
+      ],
+      "negativeSignals": [
+        "敷衍了事",
+        "没有实际反思"
+      ],
+      "maxPoints": 20
+    }
+  ],
+  "red_flags": [
+    {
+      "id": "missing_artifacts",
+      "description": "核心交付物缺失",
+      "affectedDimension": "artifactCompleteness",
+      "maxScore": 5
+    },
+    {
+      "id": "no_ai_log",
+      "description": "无 AI 使用记录/AAR",
+      "affectedDimension": "reflectionQuality",
+      "maxScore": 5
+    },
+    {
+      "id": "one_shot_ai",
+      "description": "一句话指令直接提交、无迭代",
+      "affectedDimension": "aiUsage",
+      "maxScore": 5
+    }
+  ]
+}
