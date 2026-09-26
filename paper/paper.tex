@@ -267,7 +267,7 @@ that Equation~(\ref{eq:decomp})'s unauditable term is not a small correction but
 potentially the dominant one.
 
 % ------------------------------------------------------------
-\section{A Taxonomy of Reduction Failures}
+\section{Analysis: A Taxonomy of Reduction Failures}
 \label{sec:taxonomy}
 
 The bottleneck claim is only useful if reduction failures can be told apart.
@@ -329,7 +329,24 @@ invisible in natural language.
 We propose a typed IR with four components: a type system, an operational
 semantics, a constraint system, and a composable graph/AST structure.  The IR is
 not a new logic; it is the interface contract that makes Layers~1 and~3
-separately auditable.
+separately auditable.  We sketch it as a small explicitly typed term language
+with types $\tau$, terms $e$, and propositions $\phi$:
+\[
+\begin{array}{rcl}
+\tau & ::= & \mathbb{N} \mid \mathbb{Z} \mid \mathbb{Q} \mid \mathbb{R}
+            \mid \tau \to \tau \mid \mathrm{Set}(\tau) \\[2pt]
+e & ::= & x \mid n \mid e + e \mid e \times e \mid e/e
+          \mid \mathrm{apply}(e,e) \mid \mathbf{let}\;x:\tau = e\;\mathbf{in}\;e \\[2pt]
+\phi & ::= & e \le e \mid e = e \mid \phi \land \phi \mid \phi \Rightarrow \phi
+            \mid \forall x{:}\tau.\,\phi
+\end{array}
+\]
+with the side condition that every division carries an explicit non-zero proof
+obligation.  That obligation is exactly the one whose silent discharge
+constitutes class~T of Section~\ref{sec:taxonomy}.  A term counts as
+well-formed only if elaboration discharges every such obligation; a reduction
+that leaves any obligation unresolved is reported as \emph{unreduced}, never as
+verified.
 
 \subsection{Bidirectional consistency}
 We require $\mathrm{IR} \leftrightarrow \text{natural language}$ to be both
@@ -400,12 +417,68 @@ Section~\ref{sec:bottleneck} is falsifiable: the IR pipeline should show lower
 $a$ but strictly positive $\nu$ and $\alpha$, whereas the baseline should show
 $\nu = \alpha = 0$ regardless of $a$.
 
+\subsection{An illustrative calculation}
+We run no experiment, but the identity can be exercised on figures already
+published elsewhere; we label this an illustration, not a measurement.  Using
+the component accuracies reported for the miniF2F
+pipeline~\cite{ospanov2025minif2f} --- $97\%$ for autoformalisation and $69\%$
+for theorem proving --- a naive composition under an independence assumption
+gives $0.97 \times 0.69 \approx 0.67$.  The same work reports end-to-end
+accuracy of about $0.36$ under the stricter criterion that credit requires the
+proved statement to correspond to the original informal one.  Read through
+Equation~(\ref{eq:decomp}), the unauditable term is therefore of order
+$0.67 - 0.36 \approx 0.31$: roughly thirty points of nominally reported accuracy
+carry no machine-checkable warrant.
+
+Two caveats are binding.  The independence assumption is ours and is not
+defended by that work; and the correspondence criterion behind $0.36$ is
+stricter than the one implicit in $0.67$, so the two quantities are not strictly
+like-for-like.  We offer the calculation as an order-of-magnitude indication.
+
+\subsection{Reporting template}
+Table~\ref{tab:template} fixes the form in which results should be reported.
+Its only hard requirement is that no cell may be inferred from another: $\alpha$
+must be measured, not derived from $a$ and $\nu$.
+
+\begin{table}[t]
+\centering
+\caption{Reporting template.  Every cell is to be measured.  A result that
+reports only column $a$ is, on the argument of this paper, uninterpretable.}
+\label{tab:template}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Condition & $a$ & $\nu$ & $\kappa$ & $\alpha$ \\
+\midrule
+Baseline, no IR            & -- & -- & -- & -- \\
+IR pipeline, no audit      & -- & -- & -- & -- \\
+IR pipeline, full checklist & -- & -- & -- & -- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Falsification criteria.}
+We state in advance what would refute the bottleneck hypothesis, so that the
+claim is testable rather than merely plausible:
+\begin{itemize}
+  \item If $\nu \approx 1$ and $\alpha \approx a$ for a system that performs no
+        explicit reduction, then reduction is not a bottleneck and the
+        decomposition adds nothing.
+  \item If observed failures do not concentrate in classes A--N but appear
+        instead as ordinary proof-search failures, the taxonomy is not carving
+        at the joint.
+  \item If enforcing the checklist raises reported accuracy $a$, then our claim
+        that auditable performance trades against apparent performance is wrong.
+\end{itemize}
+
 \paragraph{Honest status.}
-This design is a proposal, not a completed experiment.  Running it requires
-engineering effort and API access beyond the scope of the present write-up, and
-we do not report numbers we have not measured.  We state the protocol because
-the identity in Equation~(\ref{eq:decomp}) is only meaningful if someone
-eventually populates it.
+This design is a proposal, not a completed experiment.  We did not run it.  The
+environment in which this paper was written has no access to model APIs, and the
+benchmark corpora were unreachable (both the upstream GSM8K source and its
+mirror were not retrievable), so no measurement could be made.  We decline to
+populate Table~\ref{tab:template} with numbers we have not measured; doing so
+would be the specific failure mode this paper criticises.  The protocol is
+stated so that the identity in Equation~(\ref{eq:decomp}) is at least
+well-defined enough for someone to populate.
 
 % ------------------------------------------------------------
 \section{Related Work}
