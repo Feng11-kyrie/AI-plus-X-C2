@@ -39,6 +39,7 @@ import sys
 import time
 import urllib.error
 import urllib.request
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 from pathlib import Path
 
@@ -238,21 +239,34 @@ def score(records):
     nu = sum(r["verifiable"] for r in records) / n
     ver = [r for r in records if r["verifiable"] and r["verified"]]
     kappa = (sum(r["consistent"] for r in ver) / len(ver)) if ver else 0.0
+    # alpha counts only outputs that are ALSO correct; without the correctness
+    # conjunct the identity a = alpha + (1-nu)u cannot hold (a measured alpha can
+    # exceed a).  This was found by running the harness, not by inspection.
     alpha = sum(r["verifiable"] and r["verified"] and r["consistent"]
-                for r in records) / n
-    return {"n": len(records), "a": a, "nu": nu, "kappa": kappa, "alpha": alpha}
+                and r["correct"] for r in records) / n
+    return {"n": len(records), "a": a, "nu": nu, "kappa": kappa, "alpha": alpha,
+            "errors": sum(1 for r in records if r.get("error"))}
 
 
-def run_condition(problems, cond, base_url, api_key, model, dry, log):
+def run_condition(problems, cond, base_url, api_key, model, dry, log, workers=8):
     prompt_tpl = BASELINE_PROMPT if cond == "baseline" else IR_PROMPT
+    prompts = [prompt_tpl.format(q=p["question"]) for p in problems]
+
+    if dry:
+        texts = [None] * len(prompts)
+    else:
+        def job(pr):
+            try:
+                return call_model(base_url, api_key, model, pr)
+            except Exception as e:                      # noqa: BLE001
+                return "__CALL_ERROR__:" + type(e).__name__
+        with ThreadPoolExecutor(max_workers=workers) as ex:
+            texts = list(ex.map(job, prompts))
+
     records = []
-    for i, p in enumerate(problems, 1):
-        prompt = prompt_tpl.format(q=p["question"])
-        if dry:
-            text = None
-        else:
-            text = call_model(base_url, api_key, model, prompt)
-        rec = {"i": i, "ref": p["ref"], "raw": text}
+    for i, (p, text) in enumerate(zip(problems, texts), 1):
+        rec = {"i": i, "ref": p["ref"], "raw": text,
+               "error": isinstance(text, str) and text.startswith("__CALL_ERROR__")}
 
         if cond == "baseline":
             ans = extract_baseline_answer(text)
@@ -286,8 +300,37 @@ def main():
     ap.add_argument("--conditions", default="baseline,ir")
     ap.add_argument("--base-url", default=os.getenv("BASE_URL", "https://api.deepseek.com"))
     ap.add_argument("--model", default=os.getenv("MODEL", "deepseek-chat"))
+    ap.add_argument("--workers", type=int, default=8)
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--rescore", metavar="RAW_JSONL",
+                    help="re-score a previous run from its raw.jsonl, no model calls")
     args = ap.parse_args()
+
+    if args.rescore:
+        from collections import Counter
+        rows = [json.loads(l) for l in Path(args.rescore).read_text().splitlines() if l.strip()]
+        half = len(rows) // 2
+        out = Path(args.rescore).parent / "rescore.md"
+        lines = ["# rescore of " + str(args.rescore), "",
+                 "| condition | a | nu | kappa | alpha | errors |", "|---|---|---|---|---|---|"]
+        tex = []
+        for cond, chunk in (("baseline", rows[:half]), ("ir", rows[half:])):
+            s = score(chunk)
+            lines.append(f"| {cond} | {s['a']:.3f} | {s['nu']:.3f} | {s['kappa']:.3f} "
+                         f"| {s['alpha']:.3f} | {s['errors']} |")
+            tex.append(f"{cond} & {s['a']:.3f} & {s['nu']:.3f} & {s['kappa']:.3f} "
+                       f"& {s['alpha']:.3f} \\\\")
+            fails = Counter(r.get("fail") for r in chunk
+                            if r.get("fail") and not r.get("verifiable"))
+            if fails:
+                lines.append("")
+                lines.append(f"  rejection reasons ({cond}): "
+                             + ", ".join(f"{k}={v}" for k, v in fails.most_common()))
+        out.write_text("\n".join(lines) + "\n")
+        (Path(args.rescore).parent / "table.tex").write_text("\n".join(tex) + "\n")
+        print("\n".join(lines))
+        print("\nwrote: " + str(out))
+        return
 
     key = os.getenv("DEEPSEEK_API_KEY") or os.getenv("OPENAI_API_KEY")
     if not args.dry_run and not key:
@@ -306,7 +349,7 @@ def main():
     with (out / "raw.jsonl").open("w") as log:
         for cond in args.conditions.split(","):
             recs = run_condition(problems, cond.strip(), args.base_url, key,
-                                 args.model, args.dry_run, log)
+                                 args.model, args.dry_run, log, args.workers)
             s = score(recs)
             summary[cond] = s
             print(f"{cond}: " + "  ".join(f"{k}={v:.3f}" if isinstance(v, float)
@@ -318,7 +361,9 @@ def main():
         "# run " + rid + "\n\n"
         + f"- problems: {len(problems)} (offset {args.offset})\n"
         + f"- model: {args.model} @ {args.base_url}\n"
-        + f"- dry-run: {args.dry_run}\n\n"
+        + f"- dry-run: {args.dry_run}   workers: {args.workers}\n"
+        + "".join(f"- {c}: call errors = {s['errors']}\n" for c, s in summary.items())
+        + "\n"
         + "| condition | a | nu | kappa | alpha |\n|---|---|---|---|---|\n"
         + "".join(f"| {c} | {s['a']:.3f} | {s['nu']:.3f} | "
                   f"{s['kappa']:.3f} | {s['alpha']:.3f} |\n"

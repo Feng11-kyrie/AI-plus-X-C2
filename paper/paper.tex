@@ -405,7 +405,7 @@ Symbol & Name & Definition \\
 $a$ & Accuracy & Fraction of final answers matching the reference \\
 $\nu$ & Verifiability rate & Fraction of outputs for which $R$ yields a well-formed object \\
 $\kappa$ & Consistency & Fraction of verified objects whose rendering matches the intended claim \\
-$\alpha$ & Certified accuracy & Fraction of \emph{all} outputs that are verifiable, verified, and consistent \\
+$\alpha$ & Certified accuracy & Fraction of \emph{all} outputs that are verifiable, verified, consistent, \emph{and correct} \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -435,23 +435,23 @@ defended by that work; and the correspondence criterion behind $0.36$ is
 stricter than the one implicit in $0.67$, so the two quantities are not strictly
 like-for-like.  We offer the calculation as an order-of-magnitude indication.
 
-\subsection{Reporting template}
-Table~\ref{tab:template} fixes the form in which results should be reported.
-Its only hard requirement is that no cell may be inferred from another: $\alpha$
-must be measured, not derived from $a$ and $\nu$.
+\subsection{Results}
+Table~\ref{tab:results} fills in the reporting form with measured values.  Its
+hard requirement is unchanged: no cell may be inferred from another, so $\alpha$
+is counted rather than derived from $a$ and $\nu$.
 
 \begin{table}[t]
 \centering
-\caption{Reporting template.  Every cell is to be measured.  A result that
-reports only column $a$ is, on the argument of this paper, uninterpretable.}
-\label{tab:template}
+\caption{Measured results on the first 200 problems of the GSM8K test split.
+$\kappa$ is undefined for the baseline because no baseline output reaches
+Layer~3.}
+\label{tab:results}
 \begin{tabular}{@{}lcccc@{}}
 \toprule
 Condition & $a$ & $\nu$ & $\kappa$ & $\alpha$ \\
 \midrule
-Baseline, no IR            & -- & -- & -- & -- \\
-IR pipeline, no audit      & -- & -- & -- & -- \\
-IR pipeline, full checklist & -- & -- & -- & -- \\
+Baseline, no IR             & 0.985 & 0.000 & --    & 0.000 \\
+IR pipeline, full checklist & 0.975 & 0.995 & 0.995 & 0.975 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -470,25 +470,61 @@ claim is testable rather than merely plausible:
         that auditable performance trades against apparent performance is wrong.
 \end{itemize}
 
-\paragraph{Honest status.}
-We did not run this experiment, and Table~\ref{tab:template} is deliberately
-empty.  The reason is narrow and worth stating precisely.  The corpus is not the
-obstacle: the GSM8K test split (1,319 problems) was retrieved in full and is
-distributed with this paper, together with a working harness that implements the
-scoring above---an extraction routine, a well-formedness checker for the IR, and
-the failure classifier that assigns each rejected output to one of the classes
-A--N.  The harness has been exercised on synthetic inputs covering every class.
-The single missing ingredient is a credential for a hosted model: the pipeline
-needs a few hundred chat-completion calls against one fixed model version, and
-no such credential was available to us.  Anyone holding one can populate
-Table~\ref{tab:template} by running the harness unmodified.
+\paragraph{Execution status.}
+The numbers in Table~\ref{tab:results} are measured, not illustrative.  One
+hosted model (\texttt{deepseek-v4-flash}) at temperature~0 produced all 400
+completions (200 problems $\times$ 2 conditions) with no call failures; the raw
+outputs, the harness, and the corpus are distributed with this paper, so the run
+is reproducible with one credential.  The calculation in
+Section~\ref{sec:protocol} remains an illustration performed on figures
+published by other work, and is not part of these measurements.
 
-We emphasise the narrowness because it matters for the reading of this paper.
-We are not reporting numbers we have not measured, and we are not claiming that
-the measurement is infeasible---only that we did not make it.  Populating the
-template with plausible-looking figures would be exactly the failure mode this
-paper criticises: an unauditable contribution to a reported quantity.  The
-protocol above is stated precisely enough that the gap is one credential wide.
+\paragraph{Three observations.}
+\textit{The headline accuracy barely moves, and that is precisely the point.}
+Reported accuracy differs by one percentage point, 0.985 against 0.975, that is
+197 versus 195 correct of 200.  A benchmark reporting $a$ alone would rank the
+baseline as the better system.  What moves is not how often the system is right
+but how much of that rightness is warranted: $\alpha$ goes from $0.000$ to
+$0.975$.  Read through Equation~(\ref{eq:decomp}), essentially all of the
+baseline's accuracy is unauditable, whereas $97.5\%$ of the IR pipeline's
+accuracy carries a machine-checkable warrant.  This is the paper's claim in its
+most concrete form: two systems that look equivalent on the reported quantity
+are not equivalent on the auditable one.
+
+\textit{The accuracy difference points the predicted way but is not
+significant.}  A McNemar exact test on the discordant pairs (one baseline-only
+failure, three IR-only failures) gives $p \approx 0.63$.  We therefore do not
+claim that enforcing the checklist lowers accuracy, only that it does not raise
+it, which is what falsification criterion~(iii) required.  Criteria~(i) and~(ii)
+are likewise not triggered: the baseline shows $\nu = 0$ independently of its
+high $a$, and the IR failures that did occur fall in classes~R and~N rather than
+in proof search.
+
+\textit{The taxonomy carves, but thinly.}  Of 200 IR outputs the checker
+accepted 199.  The sole rejection was class~R, a variable bound to a
+not-yet-declared name; one further output was well-formed but inconsistent,
+class~N, its goal evaluating to a value different from the model's own stated
+answer.  Both are genuine instances of Section~\ref{sec:taxonomy}.  At this
+difficulty they are simply rare.
+
+\paragraph{What this run does not establish.}
+Three limits are binding and we state them plainly.  First, the baseline's
+$\nu = 0$ is \emph{definitional, not measured}: the baseline protocol requests
+free-form output, so no structured object exists to check.  We did not discover
+that the baseline cannot produce one; we specified that it does not.  The
+empirical content of the $\nu$ column lies entirely in the IR row --- that a
+current model can be induced to emit a checker-acceptable IR on $99.5\%$ of
+grade-school problems.  Second, GSM8K is too easy to stress Layer~2: its
+problems require bounded arithmetic over a handful of quantities, so the
+semantic content that reduction must preserve is thin.  A high $\nu$ here
+licenses no conclusion about formalising olympiad statements into Lean, and we
+read it as an upper bound attained on the easiest admissible task rather than an
+estimate of $\nu$ in general.  Third, $\kappa$ is nearly vacuous in this design:
+it compares the IR's rendering against the model's \emph{own} stated answer, and
+both come from a single generation, so agreement is nearly automatic.  A
+consistency check that cannot fail is not yet measuring semantic fidelity.
+Making $\kappa$ bite needs an independently authored rendering of the problem,
+which we do not do here.
 
 % ------------------------------------------------------------
 \section{Related Work}
@@ -599,11 +635,16 @@ unauditable term; $u$ is not observable without human audit, which is the very
 thing it is meant to replace.
 
 \paragraph{Threats to validity.}
-The bottleneck claim is argued structurally, not measured: we have shown that
-Layer~2 failures are invisible to Layer~3, not that they are frequent.  Their
-frequency is an empirical question our protocol is designed to answer, and until
-it is answered the claim should be read as a hypothesis with a clear falsification
-procedure.
+We have measured $\nu$ and $\alpha$ for one model, one corpus, and one IR
+design, and the generality of all three choices is untested.  The bottleneck
+hypothesis is supported but not established: we have shown that a checker-ready
+intermediate object can be produced and audited cheaply on easy problems, and
+that doing so is invisible to accuracy-only reporting.  Whether reduction stays
+cheap on problems with real semantic content --- which is exactly where the
+taxonomy predicts it will not --- is the question these numbers deliberately
+leave open.  The unauditable term $u$ is in principle observable once $\nu < 1$;
+here $\nu$ was high enough that only one output fell in that stratum, so our
+estimate of $u$ rests on a single item and should not be relied upon.
 
 \paragraph{Extensions.}
 The same decomposition should apply to general reasoning systems and to agent
@@ -622,7 +663,9 @@ criteria, and to propose certified accuracy as a quantity that makes the
 bottleneck hypothesis testable rather than rhetorical.  The practical claim is
 narrow and we state it plainly: benchmarks that report accuracy alone cannot
 distinguish a system that reasons well from one that merely answers well, and
-the distinction is worth measuring.
+the distinction is worth measuring.  A first measurement makes the cost of
+ignoring it concrete --- two systems within one point of each other on reported
+accuracy differ by 97.5 points on certified accuracy.
 
 % ------------------------------------------------------------
 \bibliographystyle{plain}

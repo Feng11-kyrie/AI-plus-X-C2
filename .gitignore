@@ -31,3 +31,9 @@ temp/
 
 # 实验运行产物（原始数据与脚本入库，运行结果不入）
 experiments/results/
+
+# 密钥（绝不入库）
+.env
+.env.*
+*.key
+secrets.*
