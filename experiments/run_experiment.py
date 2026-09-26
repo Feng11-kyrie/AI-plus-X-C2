@@ -47,7 +47,14 @@ ROOT = Path(__file__).resolve().parent
 DATA = ROOT / "data" / "gsm8k_test.jsonl"
 RESULTS = ROOT / "results"
 
-BASELINE_PROMPT = """Solve the following grade-school math problem.
+#: Two phrasings of the same instruction.  They exist because measured
+#: verifiability turned out to depend on them: on identical GSM8K problems and
+#: model, nu was 0.995 with the "grade-school" phrasing and ~0.81 with the
+#: neutral one.  Rather than pick the flattering number, we expose the choice.
+TASK_PHRASE = {"plain": "math problem",
+               "grade-school": "grade-school math problem"}
+
+BASELINE_PROMPT = """Solve the following {task}.
 Think step by step, then give the final answer on its own last line in the
 exact form:
 
@@ -56,7 +63,7 @@ exact form:
 Problem: {q}
 """
 
-IR_PROMPT = """Solve the following grade-school math problem by emitting a typed
+IR_PROMPT = """Solve the following {task} by emitting a typed
 intermediate representation, then a final answer.
 
 Reply with EXACTLY ONE JSON object and nothing else, with this schema:
@@ -79,20 +86,42 @@ Problem: {q}
 # --------------------------------------------------------------------------
 # data
 # --------------------------------------------------------------------------
-def load_problems(limit, offset=0):
-    rows = [json.loads(l) for l in DATA.read_text().splitlines() if l.strip()]
+DATASETS = {
+    "gsm8k": ROOT / "data" / "gsm8k_test.jsonl",
+    "math-prealgebra": ROOT / "data" / "math_prealgebra.jsonl",
+    "math-number-theory": ROOT / "data" / "math_number_theory.jsonl",
+}
+
+
+def load_problems(limit, offset=0, dataset="gsm8k"):
+    """Load problems graded against an integer reference answer.
+
+    Only integer references are used, on every dataset.  The reason is a
+    grading artefact, not a modelling choice: a reference of 1/11 is stored as
+    0.09090909090909091, so a model that correctly writes 0.0909 is off by
+    9.1e-6 -- larger than the 1e-6 tolerance -- and would be scored wrong for
+    writing fewer digits.  Restricting to integers makes ``correct`` a fact
+    about the answer rather than about its decimal rendering.
+    """
+    path = DATASETS[dataset]
+    rows = [json.loads(l) for l in path.read_text().splitlines() if l.strip()]
     rows = rows[offset:]
     if limit:
         rows = rows[:limit]
-    out = []
+    out, seen_total, seen_int = [], 0, 0
     for r in rows:
-        m = re.search(r"####\s*([-\d,\.]+)", r["answer"])
-        if not m:
+        seen_total += 1
+        if dataset == "gsm8k":
+            m = re.search(r"####\s*([-\d,\.]+)", r["answer"])
+            if not m:
+                continue
+            ref = float(m.group(1).replace(",", ""))
+        else:
+            ref = float(r["ref"])
+        if abs(ref - round(ref)) > 1e-9:
             continue
-        out.append({
-            "question": r["question"],
-            "ref": float(m.group(1).replace(",", "")),
-        })
+        seen_int += 1
+        out.append({"question": r["question"], "ref": ref})
     return out
 
 
@@ -248,9 +277,10 @@ def score(records):
             "errors": sum(1 for r in records if r.get("error"))}
 
 
-def run_condition(problems, cond, base_url, api_key, model, dry, log, workers=8):
+def run_condition(problems, cond, base_url, api_key, model, dry, log, full,
+                  workers=8, task="math problem"):
     prompt_tpl = BASELINE_PROMPT if cond == "baseline" else IR_PROMPT
-    prompts = [prompt_tpl.format(q=p["question"]) for p in problems]
+    prompts = [prompt_tpl.format(q=p["question"], task=task) for p in problems]
 
     if dry:
         texts = [None] * len(prompts)
@@ -265,7 +295,7 @@ def run_condition(problems, cond, base_url, api_key, model, dry, log, workers=8)
 
     records = []
     for i, (p, text) in enumerate(zip(problems, texts), 1):
-        rec = {"i": i, "ref": p["ref"], "raw": text,
+        rec = {"i": i, "cond": cond, "ref": p["ref"], "raw": text,
                "error": isinstance(text, str) and text.startswith("__CALL_ERROR__")}
 
         if cond == "baseline":
@@ -287,6 +317,10 @@ def run_condition(problems, cond, base_url, api_key, model, dry, log, workers=8)
         records.append(rec)
         log.write(json.dumps({k: v for k, v in rec.items() if k != "raw"},
                              ensure_ascii=False) + "\n")
+        # full text is kept separately: every reported nu/kappa must be
+        # re-derivable from what the model actually said, by a reader.
+        full.write(json.dumps({"i": i, "cond": cond, "text": text},
+                              ensure_ascii=False) + "\n")
         print(f"  [{cond}] {i}/{len(problems)} "
               f"correct={rec['correct']} nu={rec['verifiable']}", flush=True)
     return records
@@ -297,10 +331,13 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--limit", type=int, default=200)
     ap.add_argument("--offset", type=int, default=0)
+    ap.add_argument("--dataset", default="gsm8k", choices=sorted(DATASETS))
     ap.add_argument("--conditions", default="baseline,ir")
     ap.add_argument("--base-url", default=os.getenv("BASE_URL", "https://api.deepseek.com"))
     ap.add_argument("--model", default=os.getenv("MODEL", "deepseek-chat"))
     ap.add_argument("--workers", type=int, default=8)
+    ap.add_argument("--prompt-style", default="plain", choices=sorted(TASK_PHRASE),
+                    help="phrasing of the task sentence; measured to affect nu")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--rescore", metavar="RAW_JSONL",
                     help="re-score a previous run from its raw.jsonl, no model calls")
@@ -337,19 +374,21 @@ def main():
         sys.exit("ERROR: set DEEPSEEK_API_KEY or OPENAI_API_KEY "
                  "(or run with --dry-run to check the harness only).")
 
-    problems = load_problems(args.limit, args.offset)
-    print(f"problems: {len(problems)}  conditions: {args.conditions}  "
-          f"dry-run: {args.dry_run}")
+    problems = load_problems(args.limit, args.offset, args.dataset)
+    print(f"dataset: {args.dataset}  problems: {len(problems)}  "
+          f"conditions: {args.conditions}  dry-run: {args.dry_run}")
 
     rid = datetime.now().strftime("%Y%m%d-%H%M%S") + ("-dry" if args.dry_run else "")
     out = RESULTS / rid
     out.mkdir(parents=True, exist_ok=True)
 
     summary, tables = {}, []
-    with (out / "raw.jsonl").open("w") as log:
+    with (out / "raw.jsonl").open("w") as log, \
+            (out / "raw_full.jsonl").open("w") as full:
         for cond in args.conditions.split(","):
             recs = run_condition(problems, cond.strip(), args.base_url, key,
-                                 args.model, args.dry_run, log, args.workers)
+                                 args.model, args.dry_run, log, full,
+                                 args.workers, TASK_PHRASE[args.prompt_style])
             s = score(recs)
             summary[cond] = s
             print(f"{cond}: " + "  ".join(f"{k}={v:.3f}" if isinstance(v, float)
@@ -359,9 +398,11 @@ def main():
 
     (out / "summary.md").write_text(
         "# run " + rid + "\n\n"
+        + f"- dataset: {args.dataset}\n"
         + f"- problems: {len(problems)} (offset {args.offset})\n"
         + f"- model: {args.model} @ {args.base_url}\n"
-        + f"- dry-run: {args.dry_run}   workers: {args.workers}\n"
+        + f"- prompt-style: {args.prompt_style}   "
+        + f"dry-run: {args.dry_run}   workers: {args.workers}\n"
         + "".join(f"- {c}: call errors = {s['errors']}\n" for c, s in summary.items())
         + "\n"
         + "| condition | a | nu | kappa | alpha |\n|---|---|---|---|---|\n"

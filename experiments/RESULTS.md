@@ -1,61 +1,119 @@
-# 实验结果
+# 实验结果留档
 
-## 执行参数
+> `results/` 原始产物被 `.gitignore` 排除（体积大、含完整模型输出），本文件是入库留档的摘要。
+> 完整原始输出见各 `results/<run-id>/raw_full.jsonl`（未入库，本地保留）。
+
+## 一、配置
 
 | 项 | 值 |
 |---|---|
-| 模型 | `deepseek-v4-flash` @ `https://api.deepseek.com` |
-| 采样 | temperature 0 |
-| 数据 | GSM8K test split 前 200 题（全量 1319 题见 `data/gsm8k_test.jsonl`） |
-| 条件 | baseline（自由 CoT）与 ir（Typed IR + 完整清单），各 200 次 |
-| 调用 | 400 次 completion，8 并发，耗时 5 分 16 秒，**失败 0 次** |
-| 运行 ID | `20260926-170715` |
+| 模型 | `deepseek-v4-flash` @ `api.deepseek.com` |
+| 温度 | 0 |
+| 并发 | 8 |
+| 总跑批 | 11 次，4,090 次 completion，零调用失败 |
+| 判分口径 | 只保留**整数参照答案**（消除循环小数的判分伪影，见下） |
+| 取样 | 各测试集前 200 题（不经随机，免 seed） |
 
-密钥经环境变量传入，未写入任何文件；`.gitignore` 已排除 `.env*` 与 `results/`。
+### 为什么只取整数答案
 
-## 结果
+参照答案 `1/11` 在 float 中是 `0.09090909090909091`。模型若正确作答写 `0.0909`，
+差值为 `9.09e-6`，大于 `1e-6` 容差 → 被判**错**。即"写几位小数"会影响对错，
+与数学能力无关。统一取整数参照答案后该伪影消失。
 
-| 条件 | $a$ | $\nu$ | $\kappa$ | $\alpha$ |
+过滤代价：MATH prealgebra 丢弃 14.1%，number theory 丢弃 8.3%（GSM8K 原本全为整数）。
+
+## 二、主表（run 174224 / 174333 / 174449，同一 session）
+
+| 任务 | n | baseline a | IR a | ν | κ | α |
+|---|---|---|---|---|---|---|
+| GSM8K | 200 | 0.980 | 0.680 | 0.835 | 0.825 | 0.660 |
+| MATH · prealgebra | 170 | 0.959 | 0.500 | 0.618 | 0.848 | 0.435 |
+| MATH · number theory | 195 | 0.933 | 0.349 | 0.626 | 0.592 | 0.113 |
+
+## 三、配对表（只在 baseline 答对的题上统计）
+
+把题目难度这个最大混淆变量控制掉：子集里每题模型都已答对，
+所以 IR 条件的任何失败都不可能是"没找到答案"。
+
+| 任务 | 已解出 | ν\|s | a_IR\|s | α\|s |
 |---|---|---|---|---|
-| Baseline（自由 CoT） | 0.985 | 0.000 | -- | 0.000 |
-| IR + 完整清单 | 0.975 | 0.995 | 0.995 | 0.975 |
+| GSM8K | 196 | 0.837 | 0.689 | **0.668** |
+| MATH · prealgebra | 163 | 0.632 | 0.521 | **0.454** |
+| MATH · number theory | 182 | 0.626 | 0.363 | **0.121** |
 
-$a$ 准确率 / $\nu$ 可验证率 / $\kappa$ 一致性 / $\alpha$ 可认证准确率（定义见论文 §6）。
+**核心读数**：报告准确率跌 4.7 点，可审计比例跌 55 点。
 
-**核心读数**：两个系统在报告准确率上只差 1 个百分点（197 vs 195 正确），
-在可认证准确率上差 97.5 个百分点。只报 $a$ 的基准会把 baseline 判为更好的系统。
+## 四、失败分类（§4 的 A/T/R/N）
 
-## 失败分类（IR 条件，200 条）
+| 任务 | 解析失败 | 其中契约(T) | 其中语法外(R) | 解析后失败(N) |
+|---|---|---|---|---|
+| GSM8K | 33/200 | 26 | 3 | 30 |
+| MATH · prealgebra | 65/170 | 24 | 27 | 21 |
+| MATH · number theory | 73/195 | 19 | 26 | 77 |
 
-- 199 条被检查器接受
-- 1 条 **R 类**：`R:forward-or-unbound-ref:max`（变量绑定到尚未声明的名字）
-- 1 条 **N 类**：`N:goal!=answer`（goal 求值 ≠ 模型自述答案），属已验证但不一致
+"解析后失败"是重点：对象已合规、已求值，但推出的值与模型自述的答案不符。
+NT 上占 39%。
 
-Baseline 200 条全部为 `A:no-structured-object`——这是**协议定义**使然（baseline 不产出结构化对象），
-不是测量发现。
+## 五、敏感度分析
 
-## 统计检验
+| 任务 | ν | 豁免非零证明规则后 | 语法外占比 |
+|---|---|---|---|
+| GSM8K | 0.835 | 0.965 | 1.5% |
+| MATH · prealgebra | 0.618 | 0.759 | 15.9% |
+| MATH · number theory | 0.626 | 0.723 | 13.3% |
 
-McNemar 精确检验（不一致对 4 个：baseline 错 IR 对 1 个，baseline 对 IR 错 3 个）：
-**p ≈ 0.63，不显著**。
+豁免契约规则后任务间差距依然成立 → 结论不依赖那条规则。
+语法外那 13–16% 属 IR 表达力不足，记为设计局限。
 
-因此文中只声称「IR 未提高准确率」，**不声称**「IR 降低了准确率」。
+## 六、可复现性（ν 不稳定，是结论不是噪声）
 
-## 已知局限（论文 §6 已写明）
+| 任务 | 各次跑批的 ν |
+|---|---|
+| GSM8K | 0.995 / 0.835 / 0.800 / 0.810 / 0.840 |
+| MATH · prealgebra | 0.641 / 0.618 / 0.647 |
+| MATH · number theory | 0.579 / 0.626 / 0.600 |
 
-1. baseline 的 $\nu=0$ 是定义性的，不是测出来的
-2. GSM8K 过于简单，不足以压测 Layer 2；此处的 $\nu$ 只能读作最易任务上的上界
-3. $\kappa$ 在此设计下近乎空洞——它比对 IR 渲染与模型自述答案，二者同源，必然一致
+首个 0.995 与后四次相差 0.16。已用 `--prompt-style` 做对照实验
+（恢复原措辞重跑 → 0.840），**确认不是提示词改动所致**，是服务端随时间漂移。
 
-## 复现
+任务效应（GSM8K 0.80–0.84 vs MATH 0.58–0.65）大于该漂移幅度，且在重复跑中稳定。
+
+## 七、⚠️ 已撤回的一处结论
+
+Day06 基于**单次**跑批写下："两个系统报告准确率只差 1 个百分点（0.985 vs 0.975）"。
+
+重复跑后不成立：
+
+| 轮次 | baseline a | IR a |
+|---|---|---|
+| 首次（服务状态 A） | 0.985 | 0.975 |
+| 后续 4 次（服务状态 B） | 0.980 / 0.975 / 0.975 / 0.975 | 0.680 / 0.665 / 0.680 / 0.675 |
+
+论文 §6 已写明 *We withdraw the earlier claim*，并保留旧数值说明其归属。
+McNemar 精确检验：三个任务 p = 2.7e-17 / 6.6e-24 / 4.2e-32。
+
+**教训**：写进正文的实验数字必须来自至少两次独立跑批。
+
+## 八、复现命令
 
 ```bash
+cd /Users/fengshuo/AI-plus-X-C2
 export DEEPSEEK_API_KEY=sk-...
-python3 experiments/run_experiment.py --model deepseek-v4-flash --limit 200 --workers 8
-```
 
-已有结果可在不调用模型的前提下重算（α 定义修正后即采用此方式）：
+# 单任务
+python3 experiments/run_experiment.py --dataset math-number-theory --limit 200
 
-```bash
-python3 experiments/run_experiment.py --rescore experiments/results/<run-id>/raw.jsonl
+# 三任务批量
+for d in gsm8k math-prealgebra math-number-theory; do
+  python3 experiments/run_experiment.py --dataset $d --limit 200
+done
+
+# 跨任务 + 配对分析
+python3 experiments/analyze.py \
+  GSM8K=results/<run1>/raw.jsonl \
+  MATH-Prealgebra=results/<run2>/raw.jsonl \
+  MATH-NumberTheory=results/<run3>/raw.jsonl
+
+# 无 key 自检管线
+python3 experiments/run_experiment.py --dry-run
 ```

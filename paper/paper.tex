@@ -46,11 +46,18 @@ four are invisible to a stronger prover.  Second, we introduce
 an identity that decomposes the latter into an auditable part and an unauditable
 part.  The practical consequence is that a system can improve its reported
 accuracy while becoming \emph{less} verifiable, and that current benchmarks
-cannot detect this.  We corroborate the bottleneck claim with recent end-to-end
-evidence in which composing a $97\%$-accurate autoformaliser with a
-$69\%$-accurate prover yields roughly $36\%$ end-to-end accuracy, the loss being
-traced to formal--informal mismatch.  We do not claim a new solver; we claim a
-sharper decomposition, a testable taxonomy, and a measurable target.
+cannot detect this.  We corroborate the bottleneck claim in two independent ways.  Published
+end-to-end evidence composes a $97\%$-accurate autoformaliser with a
+$69\%$-accurate prover and obtains roughly $36\%$ end-to-end accuracy, the loss
+being traced to formal--informal mismatch.  And we report a first measurement of
+our own: across GSM8K and two MATH subjects, one model's reported accuracy falls
+by less than five points ($0.980 \to 0.933$) while the share of its own correct
+answers that survives machine audit falls from $0.67$ to $0.12$.  The failures
+concentrate in the reduction layer and none of them is visible to a stronger
+verifier.  We also find that $\nu$ is not stable across runs of a fixed hosted
+model, moving by up to $16$ points, which is itself an argument for measuring it
+rather than assuming it.  We do not claim a new solver; we claim a sharper
+decomposition, a testable taxonomy, and a measurable target.
 
 \noindent\textbf{Keywords:} AI for mathematics, formal verification, semantic
 reduction, neuro-symbolic systems, reliability, evaluation methodology
@@ -103,9 +110,12 @@ measured, not assumed.
         (Sections~\ref{sec:framework} and~\ref{sec:protocol}).
 \end{enumerate}
 
-We are explicit about scope: this paper proposes no new solver and reports no
-benchmark numbers.  Its contribution is analytic --- a sharper decomposition and
-metrics that make the central claim falsifiable.
+We are explicit about scope: this paper proposes no new solver.  It is analytic
+in its main contribution --- a sharper decomposition and metrics that make the
+central claim falsifiable --- but Section~\ref{sec:protocol} does report
+measurements, on one hosted model and three school-level corpora, and
+Section~\ref{sec:protocol-sens} is explicit about how much of what we measured
+belongs to our apparatus rather than to the model.
 
 % ------------------------------------------------------------
 \section{A Three-Layer Decomposition}
@@ -384,10 +394,21 @@ apparent performance for auditable performance.
 \label{sec:protocol}
 
 \subsection{Benchmarks}
+\label{sec:protocol-benchmarks}
 GSM8K~\cite{cobbe2021gsm8k} and MATH~\cite{hendrycks2021math} for informal
 reasoning; miniF2F~\cite{zheng2022minif2f} for formal proving.  We note a
 methodological caveat discussed in Section~\ref{sec:rw-verify}: miniF2F
 statements are human-formalized, so it exercises Layer~3 but not Layer~2.
+
+Two filters are applied to every task and must be stated because they shape the
+numbers.  First, only problems whose reference answer is an integer are scored.
+This is a grading decision, not a modelling one: a reference of $1/11$ is stored
+as $0.09090909090909091$, so a model that correctly writes $0.0909$ is off by
+$9.1\times10^{-6}$ and would be marked wrong for writing fewer digits.
+Restricting to integers makes ``correct'' a fact about the answer rather than
+about its decimal rendering.  It removes $14.1\%$ of MATH prealgebra and $8.3\%$
+of number theory.  Second, we take the first 200 surviving problems of each test
+split rather than sampling, so the subset is reproducible without a seed.
 
 \subsection{Metrics}
 Table~\ref{tab:metrics} defines the reported quantities.  The protocol's only
@@ -418,8 +439,8 @@ $a$ but strictly positive $\nu$ and $\alpha$, whereas the baseline should show
 $\nu = \alpha = 0$ regardless of $a$.
 
 \subsection{An illustrative calculation}
-We run no experiment, but the identity can be exercised on figures already
-published elsewhere; we label this an illustration, not a measurement.  Using
+The identity can also be exercised on figures published elsewhere.  We label
+this an illustration, not one of our measurements.  Using
 the component accuracies reported for the miniF2F
 pipeline~\cite{ospanov2025minif2f} --- $97\%$ for autoformalisation and $69\%$
 for theorem proving --- a naive composition under an independence assumption
@@ -442,19 +463,147 @@ is counted rather than derived from $a$ and $\nu$.
 
 \begin{table}[t]
 \centering
-\caption{Measured results on the first 200 problems of the GSM8K test split.
-$\kappa$ is undefined for the baseline because no baseline output reaches
-Layer~3.}
+\caption{Measured results on three task distributions, one model
+(\texttt{deepseek-v4-flash}, temperature~0), one harness, one session.  The
+baseline column is free-form chain-of-thought; the IR columns are the same model
+asked to emit the typed IR of Section~\ref{sec:framework}.  $\kappa$ is
+conditioned on outputs that parse and evaluate; $\alpha$ is over all outputs.
+$n < 200$ for the MATH rows because problems with a non-integer reference answer
+are excluded (Section~\ref{sec:protocol-benchmarks}).}
 \label{tab:results}
-\begin{tabular}{@{}lcccc@{}}
+\begin{tabular}{@{}lcccccc@{}}
 \toprule
-Condition & $a$ & $\nu$ & $\kappa$ & $\alpha$ \\
+Task & $n$ & baseline $a$ & IR $a$ & $\nu$ & $\kappa$ & $\alpha$ \\
 \midrule
-Baseline, no IR             & 0.985 & 0.000 & --    & 0.000 \\
-IR pipeline, full checklist & 0.975 & 0.995 & 0.995 & 0.975 \\
+GSM8K                    & 200 & 0.980 & 0.680 & 0.835 & 0.825 & 0.660 \\
+MATH, prealgebra         & 170 & 0.959 & 0.500 & 0.618 & 0.848 & 0.435 \\
+MATH, number theory      & 195 & 0.933 & 0.349 & 0.626 & 0.592 & 0.113 \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+\paragraph{Reading the table.}
+The baseline column is nearly flat: $0.980$, $0.959$, $0.933$.  Read on its own
+it says that the model is a competent solver on all three distributions and only
+slightly worse on the harder ones.  The $\alpha$ column describes the same model
+on the same problems and says something else: $0.660$, $0.435$, $0.113$.
+Reported accuracy falls by $4.7$ points across the three rows; certified accuracy
+falls by $55$.  Nothing in the first column would let a reader anticipate the
+third.
+
+\paragraph{Paired analysis.}
+A low $\nu$ admits two explanations that $\nu$ alone cannot separate: the problem
+is genuinely hard, or the model can solve it but cannot express the solution in a
+checkable form.  Table~\ref{tab:paired} removes the first explanation by
+restricting every quantity to the subset of problems the \emph{baseline}
+answered correctly.  On that subset the model demonstrably knows the answer, so
+whatever the IR condition fails to produce is not a failure to find one.
+
+\begin{table}[t]
+\centering
+\caption{Paired results, restricted to the problems the baseline solved
+(``$s$'').  Task difficulty is controlled by construction: every problem in this
+subset was answered correctly by free-form decoding.}
+\label{tab:paired}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Task & solved & $\nu \mid s$ & $a_{\mathrm{IR}} \mid s$ & $\alpha \mid s$ \\
+\midrule
+GSM8K               & 196 & 0.837 & 0.689 & 0.668 \\
+MATH, prealgebra    & 163 & 0.632 & 0.521 & 0.454 \\
+MATH, number theory & 182 & 0.626 & 0.363 & 0.121 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+This is the paper's central measurement.  Of the answers the model can produce,
+the share that survives machine audit falls from two thirds on grade-school
+arithmetic to one eighth on number theory, while the share it gets right in the
+first place falls by less than five points.  The two quantities describe the same
+model on the same problems and they move in opposite directions.
+
+\paragraph{Where the failures land.}
+Table~\ref{tab:classes} splits the failures into the classes of
+Section~\ref{sec:taxonomy}, separating two things that are easy to conflate:
+outputs that never became a checkable object, which is what lowers $\nu$; and
+outputs that parsed but then failed to evaluate or whose goal disagreed with
+their own stated answer, which is class~N and does not lower $\nu$.
+
+\begin{table}[t]
+\centering
+\caption{Failure classes.  ``contract'' counts class~T rejections for omitting
+the non-zero proof required on division; ``out of grammar'' counts class~R
+rejections naming an operation the IR cannot express ($\gcd$, $\bmod$,
+$\lfloor\cdot\rfloor$, $\sqrt{\cdot}$).  Both are partly artefacts of our IR
+rather than semantic failures, and Section~\ref{sec:protocol-sens} prices them.}
+\label{tab:classes}
+\small
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Task & parse-fail & contract (T) & grammar (R) & post-parse (N) \\
+\midrule
+GSM8K               & 33/200 & 26 &  3 & 30 \\
+MATH, prealgebra    & 65/170 & 24 & 27 & 21 \\
+MATH, number theory & 73/195 & 19 & 26 & 77 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The informative entry is the last column.  These are outputs the checker
+accepted as well-formed and then evaluated to a value different from the number
+the model itself reported --- the model asserts one thing and its own structured
+derivation asserts another.  On GSM8K and prealgebra this happens to about one
+output in seven; on number theory, to two in five.  The failures concentrate
+exactly where Section~\ref{sec:taxonomy} predicts, in the mapping rather than in
+search: no output in any condition failed because a proof could not be found.
+
+\subsection{How much of the failure is our IR's fault?}
+\label{sec:protocol-sens}
+Two entries of Table~\ref{tab:classes} are artefacts rather than findings, and
+we price them instead of reporting them as reduction failures.
+
+The ``contract'' column counts outputs rejected because a division lacked the
+non-zero proof the schema demands.  The rule is ours; a model that ignores it has
+failed to follow a contract, not necessarily to preserve meaning.  Waiving it
+raises $\nu$ from $0.835$ to $0.965$ on GSM8K, from $0.618$ to $0.759$ on
+prealgebra, and from $0.626$ to $0.723$ on number theory.  The gap between
+GSM8K and MATH survives the waiver almost unchanged, so the finding does not
+depend on that rule.
+
+The ``out of grammar'' column is a stricter objection.  Our IR expresses
+arithmetic over rationals and nothing else, so a problem needing $\gcd$, modular
+arithmetic, or a floor cannot be expressed in it at all; rejecting such an output
+measures our grammar, not the model.  These are $1.5\%$ of GSM8K, $15.9\%$ of
+prealgebra and $13.3\%$ of number theory.  We report this rather than filtering
+it away, because a reduction layer that cannot carry the semantics of its domain
+is a real limitation of the layer --- but the honest reading is that part of the
+MATH deficit belongs to the IR design and not to the model.
+
+What remains after both are set aside is the post-parse column, and it is the one
+that grows.
+
+\subsection{Reproducibility}
+\label{sec:protocol-repro}
+$\nu$ turned out to be less stable than we expected, and the instability is a
+result rather than a nuisance.  Across repeated runs of the identical
+configuration on GSM8K --- same 200 problems, same model string, same
+temperature, same harness --- we measured $\nu = 0.995$, $0.835$, $0.800$,
+$0.810$ and $0.840$.  The first of these was taken about forty minutes before the
+others; the four later runs agree with each other to within $0.04$ and disagree
+with the first by $0.16$.  We did not change the prompt, the corpus, or the
+checker in between, and a control run with the original phrasing restored gave
+$0.840$, so the drift is not attributable to our prompt edit.  Repeated runs on
+the MATH subsets are tighter: $\nu = 0.641, 0.618, 0.647$ on prealgebra and
+$0.579, 0.626, 0.600$ on number theory.
+
+Two consequences follow.  First, a single $\nu$ measured against a hosted model
+should not be read as a property of that model; the ranges above are disjoint
+between GSM8K ($0.80$--$0.84$, excluding the drifted first run) and MATH
+($0.58$--$0.65$), which is why we claim a task effect at all, but any individual
+number carries an uncertainty of a few points that we cannot attribute to a
+cause.  Second, and more to the point of this paper: a quantity that moves
+$16$ points under a fixed model version is exactly the kind of quantity that
+must be reported rather than assumed, and it is not reported today.
 
 \paragraph{Falsification criteria.}
 We state in advance what would refute the bottleneck hypothesis, so that the
@@ -471,60 +620,73 @@ claim is testable rather than merely plausible:
 \end{itemize}
 
 \paragraph{Execution status.}
-The numbers in Table~\ref{tab:results} are measured, not illustrative.  One
-hosted model (\texttt{deepseek-v4-flash}) at temperature~0 produced all 400
-completions (200 problems $\times$ 2 conditions) with no call failures; the raw
-outputs, the harness, and the corpus are distributed with this paper, so the run
-is reproducible with one credential.  The calculation in
+The numbers in Tables~\ref{tab:results}--\ref{tab:classes} are measured, not
+illustrative.  One hosted model (\texttt{deepseek-v4-flash}) at temperature~0
+produced every completion behind them --- 1,130 for the three tasks of
+Table~\ref{tab:results} (565 problems $\times$ 2 conditions) and 4,090 in total
+across the eleven runs of Section~\ref{sec:protocol-repro} --- with no call
+failures.  The harness, the corpora, and the verbatim model outputs are
+distributed with this paper, so every $\nu$ and $\kappa$ reported here can be
+re-derived without trusting us.  The calculation of
 Section~\ref{sec:protocol} remains an illustration performed on figures
-published by other work, and is not part of these measurements.
+published by other work and is not one of our measurements.
 
 \paragraph{Three observations.}
-\textit{The headline accuracy barely moves, and that is precisely the point.}
-Reported accuracy differs by one percentage point, 0.985 against 0.975, that is
-197 versus 195 correct of 200.  A benchmark reporting $a$ alone would rank the
-baseline as the better system.  What moves is not how often the system is right
-but how much of that rightness is warranted: $\alpha$ goes from $0.000$ to
-$0.975$.  Read through Equation~(\ref{eq:decomp}), essentially all of the
-baseline's accuracy is unauditable, whereas $97.5\%$ of the IR pipeline's
-accuracy carries a machine-checkable warrant.  This is the paper's claim in its
-most concrete form: two systems that look equivalent on the reported quantity
-are not equivalent on the auditable one.
+\textit{Reported accuracy hides a collapse, and the two move in opposite
+directions.}  Across the three tasks the model's free-form accuracy falls
+$0.980 \to 0.959 \to 0.933$, a change of under five points that any reasonable
+reader would describe as mild degradation.  Over the same tasks the share of its
+own correct answers that survives audit falls $0.668 \to 0.454 \to 0.121$.  The
+first column says the model is fine; the second says most of what it knows
+cannot be warranted, and that the problem gets worse precisely as the semantics
+get harder.  Only the second is visible in $\alpha$.
 
-\textit{The accuracy difference points the predicted way but is not
-significant.}  A McNemar exact test on the discordant pairs (one baseline-only
-failure, three IR-only failures) gives $p \approx 0.63$.  We therefore do not
-claim that enforcing the checklist lowers accuracy, only that it does not raise
-it, which is what falsification criterion~(iii) required.  Criteria~(i) and~(ii)
-are likewise not triggered: the baseline shows $\nu = 0$ independently of its
-high $a$, and the IR failures that did occur fall in classes~R and~N rather than
-in proof search.
+\textit{The cost of auditability is real, and we no longer claim it is free.}
+An earlier single run of this protocol on GSM8K gave $a = 0.975$ for the IR
+condition against $0.985$ for the baseline, and we reported the one-point
+difference as evidence that a checkable pipeline need not sacrifice apparent
+accuracy.  That result did not replicate: across four subsequent runs the IR
+condition scores $0.680$, $0.665$, $0.680$ and $0.675$ against baselines of
+$0.980$, $0.975$, $0.975$ and $0.975$.  The IR pipeline is
+\emph{substantially} worse on reported accuracy on every task --- by 30 points
+on GSM8K, 46 on prealgebra and 58 on number theory --- and McNemar exact tests
+give $p < 10^{-16}$ on all three, so this is not a sampling artefact.  We
+withdraw the earlier claim.  Note that this does not trigger falsification
+criterion~(iii), which predicted the opposite sign; what it changes is the
+practical reading.  Enforcing semantic reduction is expensive in the only
+currency benchmarks currently track.
 
-\textit{The taxonomy carves, but thinly.}  Of 200 IR outputs the checker
-accepted 199.  The sole rejection was class~R, a variable bound to a
-not-yet-declared name; one further output was well-formed but inconsistent,
-class~N, its goal evaluating to a value different from the model's own stated
-answer.  Both are genuine instances of Section~\ref{sec:taxonomy}.  At this
-difficulty they are simply rare.
+\textit{The taxonomy carves at a joint, and the joint is not where accuracy
+lives.}  Every failure we observed fell in classes~A, T, R or~N.  None was a
+proof-search failure, none was an arithmetic error the checker could have caught
+by recomputing, and none would have been detected by a stronger verifier,
+because in every case either no object reached the verifier or the object that
+reached it was internally consistent with itself and merely failed to say what
+the model meant.  The concentration in class~N on number theory --- 77 outputs
+that parsed, evaluated, and then disagreed with the model's own answer --- is
+the clearest instance: the model asserted one number and derived another, and
+only the reduction-layer check could see it.
 
 \paragraph{What this run does not establish.}
-Three limits are binding and we state them plainly.  First, the baseline's
-$\nu = 0$ is \emph{definitional, not measured}: the baseline protocol requests
-free-form output, so no structured object exists to check.  We did not discover
-that the baseline cannot produce one; we specified that it does not.  The
-empirical content of the $\nu$ column lies entirely in the IR row --- that a
-current model can be induced to emit a checker-acceptable IR on $99.5\%$ of
-grade-school problems.  Second, GSM8K is too easy to stress Layer~2: its
-problems require bounded arithmetic over a handful of quantities, so the
-semantic content that reduction must preserve is thin.  A high $\nu$ here
-licenses no conclusion about formalising olympiad statements into Lean, and we
-read it as an upper bound attained on the easiest admissible task rather than an
-estimate of $\nu$ in general.  Third, $\kappa$ is nearly vacuous in this design:
-it compares the IR's rendering against the model's \emph{own} stated answer, and
-both come from a single generation, so agreement is nearly automatic.  A
-consistency check that cannot fail is not yet measuring semantic fidelity.
-Making $\kappa$ bite needs an independently authored rendering of the problem,
-which we do not do here.
+Four limits are binding.  First, the baseline's $\nu = 0$ is
+\emph{definitional, not measured}: the baseline protocol requests free-form
+output, so no structured object exists to check.  We did not discover that the
+baseline cannot produce one; we specified that it does not.  All empirical
+content of the $\nu$ column lies in the IR row.  Second, our IR expresses
+arithmetic over the rationals and nothing else, so part of the MATH deficit
+measures our grammar rather than the model; Section~\ref{sec:protocol-sens}
+bounds this at $13$--$16\%$ of MATH problems and shows the task gap survives
+waiving the other artefact, but a richer IR would presumably raise $\nu$ and we
+cannot say by how much.  Third, $\kappa$ compares the IR's rendering against the
+model's \emph{own} stated answer.  Where the two agree, as on GSM8K, the check
+is weak --- a consistency test that cannot fail is not yet measuring semantic
+fidelity.  Where they disagree, as on 39\% of number-theory outputs, it is
+informative, but it then measures internal coherence of one generation rather
+than correspondence to an independently authored formalisation, which we do not
+have.  Fourth, everything here is one model, one IR, and one family of
+school-level tasks; nothing licenses a claim about formalising research
+mathematics into Lean, where the reduction problem is harder and the objects are
+richer.
 
 % ------------------------------------------------------------
 \section{Related Work}
@@ -635,16 +797,34 @@ unauditable term; $u$ is not observable without human audit, which is the very
 thing it is meant to replace.
 
 \paragraph{Threats to validity.}
-We have measured $\nu$ and $\alpha$ for one model, one corpus, and one IR
-design, and the generality of all three choices is untested.  The bottleneck
-hypothesis is supported but not established: we have shown that a checker-ready
-intermediate object can be produced and audited cheaply on easy problems, and
-that doing so is invisible to accuracy-only reporting.  Whether reduction stays
-cheap on problems with real semantic content --- which is exactly where the
-taxonomy predicts it will not --- is the question these numbers deliberately
-leave open.  The unauditable term $u$ is in principle observable once $\nu < 1$;
-here $\nu$ was high enough that only one output fell in that stratum, so our
-estimate of $u$ rests on a single item and should not be relied upon.
+We have measured $\nu$ and $\alpha$ for one model, one IR design, and three
+school-level corpora, and the generality of all three choices is untested.  The
+bottleneck hypothesis is supported but not established.  What the numbers show
+is that reduction failures are frequent, that they concentrate in the classes the
+taxonomy predicts, and that they grow as the semantics get harder; what they do
+not show is that this pattern survives a different IR, a different model family,
+or mathematics beyond school level.
+
+Three specific threats deserve to be singled out.  The first is
+\emph{instrumentation}: our IR is arithmetic over the rationals, so a problem
+needing $\gcd$ or modular arithmetic is unrepresentable in it, and a rejection on
+such a problem measures our grammar.  We bound this at $13$--$16\%$ of MATH
+(Section~\ref{sec:protocol-sens}) rather than removing it, because a reduction
+layer too poor for its domain is a real limitation --- but the reader should
+discount part of the MATH deficit accordingly.  The second is \emph{contract
+compliance}: $26$, $24$ and $19$ outputs were rejected only for omitting a
+non-zero proof, a rule the model was told to follow and did not.  Waiving it
+narrows the gap between tasks but does not close it.  The third is
+\emph{measurement stability}: $\nu$ moved by $16$ points between two runs of an
+identical configuration (Section~\ref{sec:protocol-repro}).  Our task effect is
+larger than that and survives in repeated runs, but any single $\nu$ reported
+here carries an uncertainty we cannot attribute to a cause, and a reader should
+not treat the second decimal place as meaningful.
+
+The unauditable term $u$ of Equation~(\ref{eq:decomp}) is in principle observable
+once $\nu < 1$; here it is well populated --- $33$, $65$ and $73$ outputs per
+task fell into that stratum --- so $u$ can now be estimated rather than assumed,
+which we leave to follow-up work.
 
 \paragraph{Extensions.}
 The same decomposition should apply to general reasoning systems and to agent
@@ -664,8 +844,12 @@ bottleneck hypothesis testable rather than rhetorical.  The practical claim is
 narrow and we state it plainly: benchmarks that report accuracy alone cannot
 distinguish a system that reasons well from one that merely answers well, and
 the distinction is worth measuring.  A first measurement makes the cost of
-ignoring it concrete --- two systems within one point of each other on reported
-accuracy differ by 97.5 points on certified accuracy.
+ignoring it concrete: as we moved from grade-school arithmetic to number theory,
+reported accuracy fell by under five points while the proportion of the model's
+own correct answers that could be warranted fell from two thirds to one eighth.
+If that gap is typical, then the accuracy numbers the field currently reports
+describe a quantity that is largely unwarranted --- and, being unwarranted,
+largely unchecked.
 
 % ------------------------------------------------------------
 \bibliographystyle{plain}
