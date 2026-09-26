@@ -47,10 +47,10 @@ AI-plus-X-C2/
 
 | 交付物 | 状态 |
 |---|---|
-| `paper/paper.tex` | 骨架完成 |
-| `paper/references.bib` | 11 篇，已核验 |
-| `logs/AI日志-Day*.md` | Day01 |
-| `aar/AAR.md` | 模板已建 |
+| `paper/paper.tex` | 正文 3815 词 · 1 图 · 2 表 · 3 公式（Day02 完成） |
+| `paper/references.bib` | **12 篇**，逐条人工核验 |
+| `logs/AI日志-Day*.md` | Day01、Day02（锚定式） |
+| `aar/AAR.md` | 模板已建，素材待合并 |
 
 评分（满分 100）：
 
@@ -75,20 +75,26 @@ AI-plus-X-C2/
 - [x] 产出可编译的 `paper.tex` 骨架（8 节齐全）
 - [x] 记录 AI 日志 Day01
 
-**Day 2 · 相关工作 + 批判性综述**
-- [ ] 精读讲义第 4 章（AI 证明定理），提取可引用的技术事实
-- [ ] 写第 5 节 Related Work：按「生成侧 / 验证侧 / 搜索侧」分类对比，不做摘要搬运
-- [ ] 每条对比都要落到「它没解决什么」
+**Day 2 · 相关工作 + 批判性综述**（已完成）
+- [x] Related Work 按「生成侧 / 验证侧 / 搜索侧」改写为批判性对比
+- [x] 统一提问框架：**这条工作默认什么东西已经给定？**（答案一律是 Layer 2 的产物）
+- [x] 三层分解图（TikZ）+ 失败模式分类表 + 指标定义表
+- [x] 形式化分解恒等式与 certified accuracy 指标
+- [x] 补入一手实证 arXiv:2511.03108（端到端 36% vs 组件 97%/69%）
+- [ ] 精读讲义第 4 章，补 1–2 条讲义来源的技术事实
 
-**Day 3 · 核心论证**
-- [ ] 写第 2–3 节：三层分解 + 语义规约瓶颈的形式化论证
+**Day 3 · 核心论证**（部分完成）
+- [x] 三层分解 + 语义规约瓶颈的形式化论证（§2–§3）
+- [x] 失败模式分类法（§4）+ 可靠性清单（§5.3）
+- [x] 框架图（§2 TikZ）
 - [ ] 补 Typed IR 的类型系统与操作语义（可用一小段 BNF 或推导规则）
-- [ ] 画第 4 节的框架图（TikZ 或外部图片）
+- [ ] 人工核验一遍文中每一条 AI 生成论断
 
 **Day 4 · 实验设计 + 修正**
-- [ ] 写第 6 节：指标定义（accuracy / verifiability / consistency）
-- [ ] 显式写出局限性与「未完成的实验」——诚实是加分项
-- [ ] 全文人工核验一遍 AI 生成的每一条论断
+- [x] 指标定义：accuracy / verifiability / consistency / certified accuracy（§6）
+- [x] 显式声明实验为 proposal、未执行——诚实是加分项
+- [ ] 决定实验走保守路还是进取路（GSM8K 小规模真实对比）
+- [ ] 目视检查 PDF 排版（表格是否超宽）
 
 **Day 5 · 排版 + 复盘**
 - [ ] 编译检查：`bash scripts/check.sh`
@@ -102,14 +108,23 @@ AI-plus-X-C2/
 
 1. 素材大纲正文把 **GSM8K** 误写成 **"GSV8K"**。
 2. 大纲第 2.3 节把验证工具列为 **Coq / Agda**，但讲义第 4 章明确当前主流是 **Lean 4 + mathlib**（AlphaProof 路线）。论文中已按事实改为 Lean 4，并在 `docs/02-文献核验记录.md` 留档。
+3. **搜索结果 ≠ 可引用文献**（Day02）：WebSearch 返回的 emergentmind 等页面是二手转述，缺完整可核对信息，直接引用即构成「引用造假」红线。已追溯到一手 arXiv:2511.03108 后才入 bib。
+4. **AI 写综述的默认形态就是搬运摘要**（Day02）：首版 Related Work 只有 5 行「某某做了什么」，属验收要点明令禁止。改用统一提问框架后才成立。
 
 ---
 
 ## 五、编译
 
-本机没有 LaTeX 发行版时，可用在线编译器（Overleaf）验证，或安装 BasicTeX。
-仓库内自检脚本：
+本机已装 **tectonic 0.17.0**（自包含二进制，无需安装器/root），可直接编译：
+
+```bash
+~/.workbuddy/binaries/tectonic/tectonic paper/paper.tex
+```
+
+也可用 Overleaf 在线验证。仓库内自检脚本：
 
 ```bash
 bash scripts/check.sh
 ```
+
+> 若换机器，从 GitHub Releases 拉 `tectonic-<ver>-aarch64-apple-darwin.tar.gz`（Intel 机选 `x86_64-apple-darwin`），解压后 `xattr -d com.apple.quarantine tectonic` 即可运行。

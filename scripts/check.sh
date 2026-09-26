@@ -8,7 +8,20 @@ ROOT="$(pwd)"
 FAIL=0
 
 echo "=== [1/4] 编译检查 ==="
-if command -v pdflatex >/dev/null 2>&1; then
+TECT=""
+for c in "$HOME/.workbuddy/binaries/tectonic/tectonic" "$(command -v tectonic 2>/dev/null)"; do
+  [ -x "$c" ] && TECT="$c" && break
+done
+if [ -n "$TECT" ]; then
+  echo "  引擎: tectonic ($TECT)"
+  cd "$ROOT/paper" || exit 1
+  if "$TECT" --reruns 2 paper.tex >/tmp/tectonic.log 2>&1; then
+    [ -f paper.pdf ] && echo "  OK: paper.pdf 生成成功 ($(wc -c < paper.pdf | tr -d ' ') bytes)" || { echo "  FAIL: 未生成 PDF"; FAIL=1; }
+  else
+    echo "  FAIL: tectonic 报错，查看 /tmp/tectonic.log"; tail -25 /tmp/tectonic.log; FAIL=1
+  fi
+  cd "$ROOT" || exit 1
+elif command -v pdflatex >/dev/null 2>&1; then
   cd "$ROOT/paper" || exit 1
   pdflatex -interaction=nonstopmode -halt-on-error paper.tex >/tmp/tex1.log 2>&1
   if [ $? -eq 0 ]; then
@@ -23,8 +36,9 @@ if command -v pdflatex >/dev/null 2>&1; then
   fi
   cd "$ROOT" || exit 1
 else
-  echo "  SKIP: 本机无 pdflatex。请用 Overleaf 导入 paper/ 目录验证，或安装 BasicTeX："
-  echo "        brew install --cask basictex   (或 https://tug.org/mactex/)"
+  echo "  SKIP: 本机无 LaTeX。用 Overleaf 导入 paper/ 验证，或装自包含版 tectonic："
+  echo "        curl -sL -o t.tar.gz https://github.com/tectonic-typesetting/tectonic/releases/download/tectonic%400.17.0/tectonic-0.17.0-aarch64-apple-darwin.tar.gz"
+  echo "        tar xzf t.tar.gz && xattr -d com.apple.quarantine tectonic && chmod +x tectonic"
 fi
 
 echo ""

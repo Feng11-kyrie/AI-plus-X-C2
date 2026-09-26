@@ -15,7 +15,10 @@
 \usepackage{amsmath,amssymb}
 \usepackage{graphicx}
 \usepackage{booktabs}
+\usepackage{tikz}
 \usepackage{hyperref}
+
+\usetikzlibrary{positioning}
 
 \title{From Natural Language to Verifiable Reasoning:\\
 A Semantic Reduction Framework for Reliable AI Mathematics}
@@ -35,14 +38,22 @@ failure is not primarily a failure of generation, nor of verification, but of
 the \emph{middle layer} that connects them.  We decompose an AI4Math system into
 three layers --- generation, semantic reduction, and verification --- and show
 that the second layer is the actual bottleneck: verification can only operate on
-computable objects, and natural language is not one.  We propose a structured
-typed intermediate representation (Typed IR) as the core system component, and
-sketch an evaluation protocol that reports \emph{verifiability} alongside
-accuracy.  We do not claim a new solver; we claim a sharper decomposition and a
-measurable target.
+computable objects, and natural language is not one.  We then make the argument
+operational in two ways.  First, we give a taxonomy of four reduction failure
+classes, each with a machine-checkable detection criterion, showing that all
+four are invisible to a stronger prover.  Second, we introduce
+\emph{certified accuracy} as a metric distinct from reported accuracy, and prove
+an identity that decomposes the latter into an auditable part and an unauditable
+part.  The practical consequence is that a system can improve its reported
+accuracy while becoming \emph{less} verifiable, and that current benchmarks
+cannot detect this.  We corroborate the bottleneck claim with recent end-to-end
+evidence in which composing a $97\%$-accurate autoformaliser with a
+$69\%$-accurate prover yields roughly $36\%$ end-to-end accuracy, the loss being
+traced to formal--informal mismatch.  We do not claim a new solver; we claim a
+sharper decomposition, a testable taxonomy, and a measurable target.
 
 \noindent\textbf{Keywords:} AI for mathematics, formal verification, semantic
-reduction, neuro-symbolic systems, reliability
+reduction, neuro-symbolic systems, reliability, evaluation methodology
 \end{abstract}
 
 % ------------------------------------------------------------
@@ -65,156 +76,470 @@ reliability~\cite{lightman2023lets} --- but it is expensive precisely because
 there is no machine-checkable handle on an intermediate step written in natural
 language.
 
-\textbf{Claim.}  Reliability cannot be bought by final-answer verification
-alone.  It requires an explicit \emph{semantic reduction layer} that maps
-natural-language reasoning into a structured object a verifier can act on.
+The field's dominant response has been to add verification on top of generation.
+We contend that this response is aimed one layer too high.  Verification
+instruments operate on objects that already possess a decidable notion of
+well-formedness; a natural-language derivation possesses none.  Something must
+therefore stand between the two, and that something is where we claim the
+failures concentrate.
+
+\paragraph{Claim.}
+Reliability cannot be bought by final-answer verification alone.  It requires an
+explicit \emph{semantic reduction layer} that maps natural-language reasoning
+into a structured object a verifier can act on --- and that layer must be
+measured, not assumed.
 
 \paragraph{Contributions.}
 \begin{enumerate}
   \item A three-layer decomposition of AI4Math systems that isolates semantic
-        reduction as a first-class component.
-  \item An argument that most observed failures concentrate in that layer, not
-        in generation or verification.
-  \item A proposed Typed IR design with bidirectional consistency requirements,
-        plus an evaluation protocol reporting verifiability in addition to
-        accuracy.
+        reduction as a first-class component rather than as preprocessing.
+  \item A structural argument, plus a decomposition identity
+        (Section~\ref{sec:bottleneck}), showing that most observed failures
+        concentrate in that layer.
+  \item A taxonomy of four reduction failure classes, each paired with a
+        machine-checkable detection criterion (Section~\ref{sec:taxonomy}).
+  \item \emph{Certified accuracy} as a metric distinct from reported accuracy, a
+        reliability checklist, and an evaluation protocol that reports both
+        (Sections~\ref{sec:framework} and~\ref{sec:protocol}).
 \end{enumerate}
+
+We are explicit about scope: this paper proposes no new solver and reports no
+benchmark numbers.  Its contribution is analytic --- a sharper decomposition and
+metrics that make the central claim falsifiable.
 
 % ------------------------------------------------------------
 \section{A Three-Layer Decomposition}
+\label{sec:decomp}
 
-Let an AI4Math system be decomposed as $G \to R \to V$:
+Let an AI4Math system be decomposed as
+\begin{equation}
+  G \;\longrightarrow\; R \;\longrightarrow\; V,
+  \label{eq:pipeline}
+\end{equation}
+where $G$ is generation, $R$ is semantic reduction, and $V$ is verification.
+Figure~\ref{fig:pipeline} places the three layers in their usual pipeline
+setting, where natural language serves as the \emph{interface} at both ends and
+the reduced object is the \emph{kernel} in the middle.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[
+  node distance=1.05cm,
+  box/.style={rectangle, draw, rounded corners=3pt, minimum height=0.95cm,
+              minimum width=1.85cm, align=center, font=\scriptsize},
+  crit/.style={rectangle, draw, rounded corners=3pt, minimum height=0.95cm,
+               minimum width=1.85cm, align=center, font=\scriptsize,
+               line width=0.8pt}
+]
+\node[box] (nl)  {Natural\\language};
+\node[box, right=of nl] (g) {Generation\\$G$};
+\node[crit, right=of g] (r) {Reduction\\$R$};
+\node[box, right=of r] (v) {Verification\\$V$};
+\node[box, right=of v] (ob) {Verified\\object};
+\draw[->] (nl) -- (g);
+\draw[->] (g) -- (r);
+\draw[->] (r) -- (v);
+\draw[->] (v) -- (ob);
+\node[below=0.55cm of r, font=\scriptsize, align=center, text width=2.6cm] (note)
+  {bottleneck:\\not a prover\\problem};
+\draw[->, dashed] (note) -- (r);
+\end{tikzpicture}
+\caption{The three-layer decomposition of an AI4Math system.  Natural language
+is the interface; the reduced object is the kernel.  Our claim is that failures
+concentrate in $R$, and that strengthening $V$ cannot compensate.}
+\label{fig:pipeline}
+\end{figure}
 
 \subsection{Layer 1: Generation}
 A language model emits a natural-language reasoning chain, typically via
-chain-of-thought prompting~\cite{wei2022chain}.  Its output is
-probabilistic, untyped, and semantically underspecified.
+chain-of-thought prompting~\cite{wei2022chain}.  Its output is probabilistic,
+untyped, and semantically underspecified.  Nothing in this layer offers a handle
+by which a machine could reject a step.
 
 \subsection{Layer 2: Semantic Reduction}
 Natural language is mapped to a structured representation: first- or
 higher-order logic expressions, executable programs, proof objects, or a typed
-intermediate representation.  The theoretical anchor is the Curry--Howard
-correspondence.  Three failure modes dominate here:
-\begin{itemize}
-  \item \textbf{Ambiguity}: the same sentence admits several formal readings.
-  \item \textbf{Missing typing}: implicit domains, coercions, and side
-        conditions are silently dropped.
-  \item \textbf{Non-invertibility}: the mapping loses information, so a
-        verified object cannot be faithfully rendered back.
-\end{itemize}
+intermediate representation.  The theoretical anchor is the
+Curry--Howard correspondence, under which a proof is a program and a formula is
+a type.  The output of this layer is the \emph{only} thing Layer~3 will ever
+see.
 
 \subsection{Layer 3: Verification}
-A formal system checks self-consistency, derivability, factual grounding, and
+A formal system checks self-consistency, derivability, factual grounding, or
 constraint satisfaction.  In practice this is an interactive theorem prover such
 as Lean~4~\cite{moura2021lean4} over the mathlib
 library~\cite{mathlib2020}, or a symbolic/SMT solver.  The cross-system
 benchmark miniF2F~\cite{zheng2022minif2f} shows that this layer is now
 measurable and comparable across provers.
 
+A useful contrast is physics-informed neural
+networks~\cite{raissi2019pinn}, where the ``verifier'' is not a proof kernel but
+a continuous residual: the network is penalized for violating a differential
+equation.  This shows that $V$ need not be symbolic, but it does not change the
+requirement that whatever $V$ consumes must already be a formal object.  The
+residual is computable precisely because the PDE was written down formally in
+advance.
+
 % ------------------------------------------------------------
 \section{The Semantic Reduction Bottleneck}
+\label{sec:bottleneck}
 
 We claim that when an AI4Math system fails, it fails in Layer~2 more often than
 in Layers~1 or~3.
 
-The argument is structural.  Verification is only defined over objects with a
-decidable notion of well-formedness.  Natural language has none.  Therefore, if
-Layer~2 produces no object, or produces an object that does not faithfully encode
-the intended claim, then Layer~3 has nothing to check --- or checks the wrong
-thing.  Two consequences follow:
+\subsection{The structural argument}
+Verification is only defined over objects with a decidable notion of
+well-formedness.  Natural language has none.  Therefore, if Layer~2 produces no
+object, or produces an object that does not faithfully encode the intended
+claim, then Layer~3 has nothing to check --- or checks the wrong thing.  Two
+consequences follow.
+
 \begin{enumerate}
-  \item \textbf{Verification failure}: the pipeline reports ``unverified''
-        rather than ``wrong'', conflating a translation failure with a
-        reasoning failure.
-  \item \textbf{Undetectable hallucination}: an unfaithful translation can be
+  \item \textbf{Verification failure masquerading as reasoning failure.}  The
+        pipeline reports ``unverified'' rather than ``unreduced'', conflating a
+        translation failure with a mathematical one.  The diagnostic signal is
+        destroyed at the point where it would be cheapest to act on.
+  \item \textbf{Undetectable hallucination.}  An unfaithful translation can be
         internally consistent and still prove a proposition different from the
-        one that was asked.
+        one that was asked.  A sound kernel certifies the object it was given,
+        not the intention behind it.
 \end{enumerate}
 
 This reframes the reliability problem: the scarce resource is not the prover's
 power but the \emph{fidelity of the translation}.
 
+\subsection{A decomposition identity}
+\label{sec:identity}
+
+The argument becomes testable once written as an identity.  Fix a benchmark of
+$N$ problems.  Let $V \subseteq \{1,\dots,N\}$ be the subset for which
+reduction yields a well-formed, machine-checkable object, and let
+$\nu = |V|/N$ be the \emph{verifiability rate}.  Let $a$ be reported
+final-answer accuracy, let
+\begin{equation}
+  \alpha \;=\; \frac{1}{N}\,
+  \bigl|\{\,i \in V : \text{object verified and consistent with intent}\,\}\bigr|
+  \label{eq:certified}
+\end{equation}
+be \emph{certified accuracy}, and let $u$ be the accuracy on the complement
+$V^{c}$ --- correct final answers that carry no machine-checkable warrant.  Then
+\begin{equation}
+  a \;=\; \alpha \;+\; (1-\nu)\,u,
+  \qquad\text{and}\qquad \alpha \;\le\; a .
+  \label{eq:decomp}
+\end{equation}
+
+Equation~(\ref{eq:decomp}) is an accounting identity, not a model, and its
+content is entirely in the second term.  The quantity $(1-\nu)u$ is exactly the
+part of reported accuracy that cannot be audited.  A system may therefore
+\emph{increase} $a$ while \emph{decreasing} $\nu$: it can become better at
+producing answers and worse at producing reasons that can be checked, and a
+benchmark reporting only $a$ will record this as progress.  No benchmark we are
+aware of reports $\nu$, so no current leaderboard can detect this regression.
+This is the concrete sense in which the field is measuring the wrong quantity.
+
+\subsection{Empirical support}
+\label{sec:evidence}
+
+The argument above is structural.  It is corroborated by a recent end-to-end
+evaluation that measures exactly the quantity we claim is unmeasured.  Ospanov,
+Farnia, and Yousefzadeh~\cite{ospanov2025minif2f} place a model in an
+``olympiad setting'': read the informal statement, formalise it in Lean, prove
+it, and receive credit only if the proved statement corresponds to the original
+informal one.  Under this protocol, the best pipeline accuracy is about
+$36\%$, against component-level accuracies of $97\%$ reported for
+autoformalisation and $69\%$ for theorem proving.  The composition of two
+strong components yields far less than either.  Analysing the failure modes,
+the authors trace a considerable portion of the drop to discrepancies between
+formal and informal statements affecting more than half of miniF2F's problems,
+and report that only $59\%$ of the formal statements in the test split are
+correct.
+
+Two readings are possible, and both support our thesis.  Under the first, the
+loss occurs because the formal statements were written carelessly --- a
+benchmark-quality failure.  Under the second, it occurs because the
+autoformaliser and the prover optimise different objectives --- a
+Layer~2 fidelity failure.  These are not competing explanations; a benchmark
+that does not police Layer~2 cannot detect either.  Note also that the authors'
+corrected benchmark raises end-to-end accuracy substantially, which shows that
+the loss was never in the prover.  We therefore treat this result as evidence
+that Equation~(\ref{eq:decomp})'s unauditable term is not a small correction but
+potentially the dominant one.
+
+% ------------------------------------------------------------
+\section{A Taxonomy of Reduction Failures}
+\label{sec:taxonomy}
+
+The bottleneck claim is only useful if reduction failures can be told apart.
+We propose four classes, distinguished by \emph{where in the pipeline they
+become detectable}.  The taxonomy is deliberately syntactic: each class is
+paired with a criterion a system can evaluate without human judgement, so that
+the classes are reportable rather than merely descriptive.
+
+Table~\ref{tab:taxonomy} states the four classes with their criteria.
+
+\begin{table}[t]
+\centering
+\caption{Four classes of semantic reduction failure.  The rightmost column is
+the point of the framework: no class is recoverable by strengthening the
+verifier.}
+\label{tab:taxonomy}
+\small
+\begin{tabular}{@{}lp{5.0cm}p{4.6cm}p{2.1cm}@{}}
+\toprule
+Class & Failure & Detection criterion & Visible to $V$? \\
+\midrule
+A & \emph{Ambiguity}: one surface form admits several well-typed formal readings
+  & Parse multiplicity $>1$ under the target type system & No --- $V$ receives one parse \\
+\addlinespace
+T & \emph{Type omission}: implicit domain, coercion, or side condition silently dropped
+  & Elaboration leaves unresolved metavariables or inserts defaults & No --- $V$ sees a well-typed term \\
+\addlinespace
+R & \emph{Referential drift}: anaphora or scope binds to a wrong antecedent across steps
+  & IR graph retains unresolved or multi-candidate coreference edges & No --- $V$ checks the resulting graph \\
+\addlinespace
+N & \emph{Non-invertibility}: the verified proposition differs from the intended one
+  & Round-trip mismatch between $\mathrm{render}(\mathrm{parse}(x))$ and $x$ & No --- $V$ proves what it was given \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Why the taxonomy matters.}
+Classes A, T, and R are all \emph{pre-verification} failures: by the time an
+object reaches $V$, the error has already been compiled into it, and a sound
+kernel will faithfully certify the wrong claim.  Class~N is the inverse failure
+and is the most damaging, because it is invisible in both directions: the proof
+is valid and the rendering reads correctly, yet the two no longer correspond.
+None of the four is mitigated by a stronger prover, a larger model, or more
+search --- which is precisely the sense in which Layer~2 is a bottleneck rather
+than a weak link that better neighbours can compensate for.
+
+\paragraph{Relation to existing error analyses.}
+Prior work on process supervision~\cite{lightman2023lets} labels erroneous steps
+but does not classify \emph{why} a step cannot be checked; our taxonomy is
+orthogonal to, and composable with, such labels.  A step can be judged correct
+by a human labeler and still fall into class~T, because the omission is
+invisible in natural language.
+
 % ------------------------------------------------------------
 \section{Proposed Framework}
+\label{sec:framework}
 
-\subsection{Structured Intermediate Representation}
+\subsection{Typed intermediate representation}
 We propose a typed IR with four components: a type system, an operational
-semantics, a constraint system, and a composable graph/AST structure.
+semantics, a constraint system, and a composable graph/AST structure.  The IR is
+not a new logic; it is the interface contract that makes Layers~1 and~3
+separately auditable.
 
-\subsection{Pipeline}
-The standard flow becomes
-\[
-\text{Natural language} \;\to\; \text{Typed IR} \;\to\;
-\text{Formal verification} \;\to\; \text{Natural-language rendering},
-\]
-where natural language is the \emph{interface} and the typed IR is the
-\emph{kernel}.
-
-\subsection{Bidirectional Consistency}
-We require $\text{IR} \leftrightarrow \text{natural language}$ to be both
+\subsection{Bidirectional consistency}
+We require $\mathrm{IR} \leftrightarrow \text{natural language}$ to be both
 interpretable and traceable: every IR node records the span it came from, and
-every rendered sentence records the node it came from.  This is the property
-that makes a human audit possible.
+every rendered sentence records the node it came from.  This property is what
+makes human audit possible, and it is the mechanism that exposes class~N
+failures through round-tripping.
+
+\subsection{A reliability checklist}
+The framework is only as good as its enforcement.  We state five requirements
+as a checklist, each traceable to a failure class above.
+
+\begin{enumerate}
+  \item \textbf{Provenance.}  Every IR node carries the source span it was
+        reduced from.  (Enables audit; exposes class~R.)
+  \item \textbf{Explicit elaboration.}  Implicit domains, coercions, and side
+        conditions are elaborated or flagged.  Silent defaults are prohibited.
+        (Exposes class~T.)
+  \item \textbf{Parse determinism.}  A reduction with multiplicity $>1$ is
+        reported as ambiguous, not resolved by sampling.  (Exposes class~A.)
+  \item \textbf{Round-trip audit.}  $\mathrm{render}(\mathrm{parse}(x))$ is
+        compared against $x$; mismatches are reported, never repaired silently.
+        (Exposes class~N.)
+  \item \textbf{Reject, do not repair.}  A failed reduction reports
+        ``unreduced''.  It must never be reported as ``verified'' or silently
+        downgraded to an unchecked answer.
+\end{enumerate}
+
+Requirement~5 is the one most likely to be violated in practice, because it
+lowers reported accuracy.  We regard that as the point: the checklist trades
+apparent performance for auditable performance.
+
+% ------------------------------------------------------------
+\section{Evaluation Protocol}
+\label{sec:protocol}
+
+\subsection{Benchmarks}
+GSM8K~\cite{cobbe2021gsm8k} and MATH~\cite{hendrycks2021math} for informal
+reasoning; miniF2F~\cite{zheng2022minif2f} for formal proving.  We note a
+methodological caveat discussed in Section~\ref{sec:rw-verify}: miniF2F
+statements are human-formalized, so it exercises Layer~3 but not Layer~2.
+
+\subsection{Metrics}
+Table~\ref{tab:metrics} defines the reported quantities.  The protocol's only
+hard requirement is that $a$ is never reported alone.
+
+\begin{table}[t]
+\centering
+\caption{Reported metrics.  $\nu$, $\kappa$, and $\alpha$ are defined only over
+outputs that reach Layer~3; $a$ is defined over all outputs.}
+\label{tab:metrics}
+\begin{tabular}{@{}clp{5.4cm}@{}}
+\toprule
+Symbol & Name & Definition \\
+\midrule
+$a$ & Accuracy & Fraction of final answers matching the reference \\
+$\nu$ & Verifiability rate & Fraction of outputs for which $R$ yields a well-formed object \\
+$\kappa$ & Consistency & Fraction of verified objects whose rendering matches the intended claim \\
+$\alpha$ & Certified accuracy & Fraction of \emph{all} outputs that are verifiable, verified, and consistent \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Comparison}
+A pure LLM baseline against an IR-based pipeline, with $\nu$ and $\alpha$
+reported for both.  The prediction implied by
+Section~\ref{sec:bottleneck} is falsifiable: the IR pipeline should show lower
+$a$ but strictly positive $\nu$ and $\alpha$, whereas the baseline should show
+$\nu = \alpha = 0$ regardless of $a$.
+
+\paragraph{Honest status.}
+This design is a proposal, not a completed experiment.  Running it requires
+engineering effort and API access beyond the scope of the present write-up, and
+we do not report numbers we have not measured.  We state the protocol because
+the identity in Equation~(\ref{eq:decomp}) is only meaningful if someone
+eventually populates it.
 
 % ------------------------------------------------------------
 \section{Related Work}
+\label{sec:related}
 
-\textbf{Generation-side.}  Chain-of-thought~\cite{wei2022chain} and
-process supervision~\cite{lightman2023lets} improve step quality but leave the
-steps unverifiable.
+We organise prior work by which layer it strengthens, and for each line ask the
+same question: \emph{what does it assume is already given?}  The answer is
+uniformly ``a formal statement or an executable evaluator'' --- which is exactly
+Layer~2's output.  That uniformity is our central finding about the literature.
 
-\textbf{Verification-side.}  Neuro-symbolic theorem
-proving~\cite{trinh2024alphageometry,zheng2022minif2f} and the Lean/mathlib
-ecosystem~\cite{moura2021lean4,mathlib2020} provide sound kernels, but assume a
-formal statement already exists.
+\subsection{Generation-side}
+Chain-of-thought prompting~\cite{wei2022chain} elicits intermediate steps and
+improves benchmark accuracy substantially.  But what it improves is
+\emph{plausibility}, not \emph{soundness}: the steps remain natural language and
+therefore remain outside the reach of any checker.  Process
+supervision~\cite{lightman2023lets} is the natural next move --- label each step,
+train a reward model on the labels, and search against it.  It works, and
+PRM800K is a valuable resource.  Its two limitations are structural, not
+incidental.  First, cost: labels are produced by human judgement at
+step granularity, so annotation effort scales with chain length.  Second, and
+more seriously, the label is itself an unverified judgement about a
+natural-language step.  A process reward model learns to predict \emph{what a
+human annotator would accept}, which is a different target from \emph{what a
+kernel would accept}.  The gap between those two targets is our Layer~2.
 
-\textbf{Search-side.}  Program-search methods~\cite{romera2024funsearch} and
-ML-guided intuition~\cite{davies2021advancing} sidestep verification by using
-an evaluator as a filter --- effective where an evaluator exists, silent where
-it does not.
+\subsection{Verification-side}
+\label{sec:rw-verify}
+The Lean~4 theorem prover~\cite{moura2021lean4} and the mathlib
+library~\cite{mathlib2020} provide a genuinely sound kernel: a proof that
+elaborates is correct by construction.  What they do not provide is the
+statement.  mathlib is human-written, and formalisation remains the dominant
+cost in mechanised mathematics --- a cost this line of work treats as given.
 
-\textbf{Difference.}  We treat semantic reduction as the core system component,
-not as preprocessing, and we make its fidelity a reported metric.
+AlphaGeometry~\cite{trinh2024alphageometry} is the most instructive case.  It
+solves 25 of 30 olympiad geometry problems, a striking result.  But the geometry
+problems are translated into a purpose-built domain-specific language by
+hand-authored translation rules before solving begins.  Layer~2 is not solved
+there; it is \emph{designed away} for one narrow domain.  The result therefore
+does not license any conclusion about reduction quality in general, and
+generalising it requires solving the very problem it sidesteps.
 
-% ------------------------------------------------------------
-\section{Experimental Design}
+miniF2F~\cite{zheng2022minif2f} has the same shape.  Its formal statements are
+human-written for each of its 488 problems (244 test, 244 validation), so a
+system evaluated on miniF2F is evaluated on Layer~3 with Layer~2 supplied by a
+human.  This makes miniF2F an excellent prover benchmark and, for our purposes,
+a poor reliability benchmark: it cannot observe reduction failure at all.
 
-\textbf{Benchmarks.}  GSM8K~\cite{cobbe2021gsm8k} and
-MATH~\cite{hendrycks2021math} for informal reasoning; miniF2F~\cite{zheng2022minif2f}
-for formal proving.
+The point is sharpened by a recent re-examination of the
+benchmark~\cite{ospanov2025minif2f}, which finds that only $59\%$ of the formal
+statements in the test split are correct, with more than half of all problems
+exhibiting formal--informal discrepancy; the authors release a corrected
+miniF2F-v2 in response.  The lesson generalises beyond one dataset: a benchmark
+that supplies Layer~2 by hand not only fails to measure it, it fails to notice
+when it is wrong.  We regard this as the most important gap in current
+evaluation practice.
 
-\textbf{Comparison.}  Pure LLM baseline versus IR-based pipeline.
+A different notion of verification appears in physics-informed neural
+networks~\cite{raissi2019pinn}, where a differential equation residual acts as a
+continuous, differentiable checker.  This widens what $V$ can be --- verification
+without formal proof --- but it is subject to the same precondition: the
+governing equation must be stated in a formal language before a residual can be
+computed.
 
-\textbf{Metrics.}  Beyond accuracy we report:
-\begin{itemize}
-  \item \emph{Verifiability rate}: fraction of outputs that yield a
-        machine-checkable object.
-  \item \emph{Consistency}: agreement between the rendered statement and the
-        verified statement.
-\end{itemize}
+\subsection{Search-side}
+FunSearch~\cite{romera2024funsearch} pairs an LLM with an evolutionary search
+over programs, using an executable evaluator as the filter, and discovered
+cap-set constructions surpassing previously known bounds.  The evaluator is
+doing the work of $V$, and it is doing it soundly.  The catch is that this
+strategy is available only where the problem class admits an executable
+evaluator: cap sets can be checked by running code.  For most of mathematics
+there is no such evaluator, and there the method has nothing to say.  The
+same observation applies to ML-guided intuition in knot
+theory~\cite{davies2021advancing}, which is a tool for generating \emph{conjectures}
+whose verification remains entirely human.
 
-We note honestly that this design is a proposal, not a completed experiment;
-running it requires engineering effort beyond the scope of the present
-write-up.
+\subsection{Consensus, gap, and positioning}
+The consensus across all three lines is that verification is valuable and that
+it should be coupled to generation.  The gap is that every instantiation assumes
+the formal object is already available, and consequently no line of work measures
+the production of that object.  Our positioning follows directly: we do not
+compete with any prover, search procedure, or supervision scheme.  We supply the
+layer they all presuppose, give it a failure taxonomy, and propose metrics that
+make its quality visible.
+
+The closest work to ours is the recent re-examination of
+miniF2F~\cite{ospanov2025minif2f}, which documents the end-to-end accuracy gap
+and repairs the benchmark.  Our relationship to it is complementary rather than
+competitive: that work improves a \emph{benchmark}, while we propose a
+\emph{decomposition and a metric}.  After their correction, the benchmark
+measures Layer~3 more honestly; it still does not report $\nu$ or $\alpha$, so it
+still cannot distinguish answering well from reasoning well.  The other adjacent
+concern is the formalisation-cost literature around mathlib, which recognises
+the problem in practice.  Our contribution is to give that concern a place in
+the system decomposition, a failure taxonomy, and a number attached to it.
 
 % ------------------------------------------------------------
 \section{Discussion}
 
-\textbf{Limitations.}  IR design is expensive; semantic mapping cost may exceed
-the cost of the proof it enables; and the framework is silent on conjectures
-that cannot be stated in the target logic at all.
+\paragraph{Limitations.}
+IR design is expensive and domain-specific; the cost of faithful semantic
+mapping may exceed the cost of the proof it enables, in which case the framework
+is not worth deploying.  The taxonomy is syntactic and may not capture semantic
+errors that preserve well-typedness and round-tripping --- a faithful
+translation of a false conjecture, for instance, is not a reduction failure at
+all.  The framework is silent on conjectures that cannot be stated in the target
+logic.  Finally, Equation~(\ref{eq:decomp}) bounds but does not estimate the
+unauditable term; $u$ is not observable without human audit, which is the very
+thing it is meant to replace.
 
-\textbf{Extensions.}  The same decomposition should apply to general reasoning
-systems and to agent architectures, where the ``verifier'' may be an external
-tool rather than a proof kernel.
+\paragraph{Threats to validity.}
+The bottleneck claim is argued structurally, not measured: we have shown that
+Layer~2 failures are invisible to Layer~3, not that they are frequent.  Their
+frequency is an empirical question our protocol is designed to answer, and until
+it is answered the claim should be read as a hypothesis with a clear falsification
+procedure.
+
+\paragraph{Extensions.}
+The same decomposition should apply to general reasoning systems and to agent
+architectures, where the ``verifier'' may be an external tool rather than a
+proof kernel, and where the corresponding question --- did the agent call the
+tool on the problem it was asked, or on a paraphrase of it? --- is a reduction
+question.
 
 % ------------------------------------------------------------
 \section{Conclusion}
 
-Reliable AI reasoning requires generation, semantic reduction, and
-verification together.  The contribution is to name the middle term, argue that
-it is the bottleneck, and propose a measurable notion of verifiability that
-makes the claim testable rather than rhetorical.
+Reliable AI reasoning requires generation, semantic reduction, and verification
+together.  The contribution of this paper is to name the middle term as a
+first-class component, to give its failures a taxonomy with machine-checkable
+criteria, and to propose certified accuracy as a quantity that makes the
+bottleneck hypothesis testable rather than rhetorical.  The practical claim is
+narrow and we state it plainly: benchmarks that report accuracy alone cannot
+distinguish a system that reasons well from one that merely answers well, and
+the distinction is worth measuring.
 
 % ------------------------------------------------------------
 \bibliographystyle{plain}
