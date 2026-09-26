@@ -28,3 +28,6 @@ Thumbs.db
 # 临时
 tmp/
 temp/
+
+# 实验运行产物（原始数据与脚本入库，运行结果不入）
+experiments/results/

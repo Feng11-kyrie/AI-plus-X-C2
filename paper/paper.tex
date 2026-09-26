@@ -471,14 +471,24 @@ claim is testable rather than merely plausible:
 \end{itemize}
 
 \paragraph{Honest status.}
-This design is a proposal, not a completed experiment.  We did not run it.  The
-environment in which this paper was written has no access to model APIs, and the
-benchmark corpora were unreachable (both the upstream GSM8K source and its
-mirror were not retrievable), so no measurement could be made.  We decline to
-populate Table~\ref{tab:template} with numbers we have not measured; doing so
-would be the specific failure mode this paper criticises.  The protocol is
-stated so that the identity in Equation~(\ref{eq:decomp}) is at least
-well-defined enough for someone to populate.
+We did not run this experiment, and Table~\ref{tab:template} is deliberately
+empty.  The reason is narrow and worth stating precisely.  The corpus is not the
+obstacle: the GSM8K test split (1,319 problems) was retrieved in full and is
+distributed with this paper, together with a working harness that implements the
+scoring above---an extraction routine, a well-formedness checker for the IR, and
+the failure classifier that assigns each rejected output to one of the classes
+A--N.  The harness has been exercised on synthetic inputs covering every class.
+The single missing ingredient is a credential for a hosted model: the pipeline
+needs a few hundred chat-completion calls against one fixed model version, and
+no such credential was available to us.  Anyone holding one can populate
+Table~\ref{tab:template} by running the harness unmodified.
+
+We emphasise the narrowness because it matters for the reading of this paper.
+We are not reporting numbers we have not measured, and we are not claiming that
+the measurement is infeasible---only that we did not make it.  Populating the
+template with plausible-looking figures would be exactly the failure mode this
+paper criticises: an unauditable contribution to a reported quantity.  The
+protocol above is stated precisely enough that the gap is one credential wide.
 
 % ------------------------------------------------------------
 \section{Related Work}

@@ -52,7 +52,12 @@ AI-plus-X-C2/
 | `logs/AI日志-Day*.md` | ✅ **Day01–Day05**（锚定式：论文位置 → AI 结论 → 核验 → 处置） |
 | `aar/AAR.md` | ✅ 七维全部填实，含 **7 个 AI 误导案例** |
 
-> 唯一未按计划完成的项：**实验未执行**（数据源与模型 API 均不可达）。已在 §6 明确声明为 proposal，并给出原因与三项替代产出（示例计算 / 报告模板 / 可证伪条件）。诚实声明不构成造假。
+> 唯一未按计划完成的项：**实验未执行**。
+> - ~~数据源不可达~~ —— **已解决（Day06）**：GSM8K test 1319 题完整获取并随文分发
+> - 实验管线 —— **已实现**：`experiments/run_experiment.py`，含 IR 良构性检查器与 A/T/R/N 失败分类器，七条合成用例实测通过
+> - **剩余缺口只剩一个模型 API 凭据**。给 key 即可跑，产出 `table.tex` 直接填 §6 报告模板
+>
+> 已在 §6 明确声明未执行，并给出三项替代产出（示例计算 / 报告模板 / 可证伪条件）。诚实声明不构成造假。
 
 评分（满分 100）：
 
@@ -95,7 +100,9 @@ AI-plus-X-C2/
 **Day 4 · 实验设计 + 修正**
 - [x] 指标定义：accuracy / verifiability / consistency / certified accuracy（§6）
 - [x] 显式声明实验为 proposal、未执行——诚实是加分项
-- [ ] 决定实验走保守路还是进取路（GSM8K 小规模真实对比）
+- [x] 数据集获取（Day06：jsDelivr 镜像，1319 题）
+- [x] 实验管线实现（Day06：`experiments/run_experiment.py`）
+- [ ] 跑真实实验（**仅缺模型 API 凭据**：`DEEPSEEK_API_KEY=sk-... python3 experiments/run_experiment.py --limit 200`）
 - [ ] 目视检查 PDF 排版（表格是否超宽）
 
 **Day 5 · 排版 + 复盘**（已完成）
@@ -103,6 +110,12 @@ AI-plus-X-C2/
 - [x] 定稿摘要与结论
 - [x] 补齐 AI 日志 Day02–05
 - [x] 七维 AAR 全部填实（含 7 个 AI 误导案例）
+
+**Day 6 · 纠错 + 收敛缺口**（交付后追加）
+- [x] 推翻 Day03「数据源不可达」的错误结论，换 jsDelivr 镜像取得 GSM8K 1319 题
+- [x] 实现可执行实验管线（IR 检查器 + A/T/R/N 失败分类器，合成用例验证）
+- [x] 改写 §6 Honest status：缺口精确收敛为「仅缺一个 model credential」
+- [x] 补 `logs/AI日志-Day06.md`，AAR 新增误导案例 8（过早归纳并写进正文）
 
 ---
 
