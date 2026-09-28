@@ -336,6 +336,7 @@ invisible in natural language.
 \label{sec:framework}
 
 \subsection{Typed intermediate representation}
+\label{sec:ir}
 We propose a typed IR with four components: a type system, an operational
 semantics, a constraint system, and a composable graph/AST structure.  The IR is
 not a new logic; it is the interface contract that makes Layers~1 and~3
@@ -366,6 +367,7 @@ makes human audit possible, and it is the mechanism that exposes class~N
 failures through round-tripping.
 
 \subsection{A reliability checklist}
+\label{sec:checklist}
 The framework is only as good as its enforcement.  We state five requirements
 as a checklist, each traceable to a failure class above.
 
@@ -558,6 +560,7 @@ exactly where Section~\ref{sec:taxonomy} predicts, in the mapping rather than in
 search: no output in any condition failed because a proof could not be found.
 
 \subsection{How much of the failure is our IR's fault?}
+\label{sec:sensitivity}
 \label{sec:protocol-sens}
 Two entries of Table~\ref{tab:classes} are artefacts rather than findings, and
 we price them instead of reporting them as reduction failures.
@@ -832,6 +835,96 @@ architectures, where the ``verifier'' may be an external tool rather than a
 proof kernel, and where the corresponding question --- did the agent call the
 tool on the problem it was asked, or on a paraphrase of it? --- is a reduction
 question.
+
+Appendix~\ref{app:extension} turns the specific expressiveness limitation
+measured in Section~\ref{sec:sensitivity} into a concrete design proposal rather
+than leaving it as an acknowledged shortcoming.
+
+% ------------------------------------------------------------
+\appendix
+\section{Extending the IR to Number-Theoretic Primitives}
+\label{app:extension}
+
+Section~\ref{sec:sensitivity} reports that $15.9\%$ of MATH prealgebra and
+$13.3\%$ of MATH number theory problems cannot be expressed in our IR at all:
+they require greatest common divisor, modular reduction, or the floor function,
+none of which the grammar of Section~\ref{sec:ir} admits.  Those problems were
+counted as reduction failures, which is correct --- but the honest reading is
+that they measure our grammar, not the model.  This appendix sketches the
+extension that would let the measurement separate the two.  We present it as a
+draft precisely because it is unimplemented: nothing here has been measured,
+and we do not claim the numbers below as results.
+
+\paragraph{Syntax.}
+Three constructors are added to the term grammar:
+\[
+e \;::=\; \cdots \mid \gcd(e,e) \mid e \bmod e \mid \lfloor e \rfloor
+\]
+
+\paragraph{Typing.}
+The existing judgments are extended as follows:
+\[
+\begin{array}{c}
+\Gamma \vdash e_1 : \mathbb{Z} \quad \Gamma \vdash e_2 : \mathbb{Z} \\ \hline
+\Gamma \vdash \gcd(e_1,e_2) : \mathbb{N}
+\end{array}
+\qquad
+\begin{array}{c}
+\Gamma \vdash e_1 : \mathbb{Z} \quad \Gamma \vdash e_2 : \mathbb{Z} \\ \hline
+\Gamma \vdash e_1 \bmod e_2 : \mathbb{N}
+\end{array}
+\qquad
+\begin{array}{c}
+\Gamma \vdash e : \mathbb{Q} \\ \hline
+\Gamma \vdash \lfloor e \rfloor : \mathbb{Z}
+\end{array}
+\]
+The third rule is the interesting one, because it is a \emph{type-lowering}
+construct: it moves a value from $\mathbb{Q}$ into $\mathbb{Z}$ and therefore
+discards information.  Every existing constructor is type-preserving or
+type-raising, so adding $\lfloor \cdot \rfloor$ is the first place where the IR
+admits a term whose denotation is lossy by construction.  We flag this because
+it interacts directly with class~N (irreversibility): a proof obligation that
+the lowered value is the one actually wanted cannot be discharged by typing
+alone.
+
+\paragraph{Proof obligations.}
+Following the discipline already applied to division, each new constructor
+carries obligations rather than silent defaults:
+\begin{itemize}
+  \item $e_1 \bmod e_2$ requires a witness that $e_2 \neq 0$, of exactly the
+        kind already required for division, and discharged by the same
+        elaboration path.  This is deliberately not a new mechanism.
+  \item $\gcd(e_1,e_2)$ requires a witness that $e_1$ and $e_2$ are not both
+        zero.  Note this is weaker than either argument being non-zero, and
+        getting it wrong is precisely the kind of silent default that
+        Section~\ref{sec:checklist} prohibits.
+  \item $\lfloor e \rfloor$ requires no non-zero witness but does require the
+        rounding convention to be stated explicitly, since floor and truncation
+        coincide on the non-negatives and diverge elsewhere.
+\end{itemize}
+
+\paragraph{Cost.}
+The extension is not free, and the cost is not merely implementational.
+Adding $\bmod$ and $\gcd$ keeps the theory inside Presburger arithmetic, which
+remains decidable, but moves the satisfiability problem into a considerably
+more expensive fragment; adding $\lfloor \cdot \rfloor$ alongside unrestricted
+multiplication approaches fragments whose decidability is not something we would
+want a verification pipeline to assume silently.  A conservative deployment is
+therefore to admit the three constructors into the \emph{syntax} while keeping
+the verification target restricted to the Presburger fragment, reporting any
+term outside it as \emph{unreduced} rather than \emph{verified} --- the same
+discipline already applied to unresolved non-zero obligations.
+
+\paragraph{What this would settle.}
+Under the extended grammar the $13$--$16\%$ currently counted as reduction
+failures split into two groups with very different meanings: those the model
+still cannot express (a genuine Layer~2 failure, attributable to the model) and
+those it can now express and may still get wrong (attributable to the model for
+a different reason, or to the model's arithmetic).  Until the extension is
+implemented, that split is not measurable, which is why Section~\ref{sec:sensitivity}
+reports the whole class as a limitation of the instrument rather than a finding
+about the model.
 
 % ------------------------------------------------------------
 \section{Conclusion}
