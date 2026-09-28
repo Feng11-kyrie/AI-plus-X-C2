@@ -1,0 +1,390 @@
+{"i": 1, "cond": "baseline", "ref": 499.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 499.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 2, "cond": "baseline", "ref": 70.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 70.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 3, "cond": "baseline", "ref": 44.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 44.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 4, "cond": "baseline", "ref": 1440.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 1440.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 5, "cond": "baseline", "ref": 6.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 6.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 6, "cond": "baseline", "ref": 18.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "A:no-structured-object", "correct": false}
+{"i": 7, "cond": "baseline", "ref": 129.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "A:no-structured-object", "correct": false}
+{"i": 8, "cond": "baseline", "ref": 2.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 2.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 9, "cond": "baseline", "ref": 48.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 48.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 10, "cond": "baseline", "ref": 10.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 10.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 11, "cond": "baseline", "ref": 1.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 1.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 12, "cond": "baseline", "ref": 71.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 71.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 13, "cond": "baseline", "ref": 12.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "A:no-structured-object", "correct": false}
+{"i": 14, "cond": "baseline", "ref": 9.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 9.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 15, "cond": "baseline", "ref": 2220.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 2220.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 16, "cond": "baseline", "ref": 12.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 12.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 17, "cond": "baseline", "ref": 6.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 6.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 18, "cond": "baseline", "ref": 21022.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "A:no-structured-object", "correct": false}
+{"i": 19, "cond": "baseline", "ref": 25.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 25.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 20, "cond": "baseline", "ref": 52.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 52.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 21, "cond": "baseline", "ref": 9.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 9.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 22, "cond": "baseline", "ref": 8.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 8.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 23, "cond": "baseline", "ref": 13.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 13.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 24, "cond": "baseline", "ref": 203.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 203.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 25, "cond": "baseline", "ref": 60.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "A:no-structured-object", "correct": false}
+{"i": 26, "cond": "baseline", "ref": 236.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 236.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 27, "cond": "baseline", "ref": 3.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 3.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 28, "cond": "baseline", "ref": 75.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 75.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 29, "cond": "baseline", "ref": 17.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 17.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 30, "cond": "baseline", "ref": 20.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 20.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 31, "cond": "baseline", "ref": 9.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 9.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 32, "cond": "baseline", "ref": 11189.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 11189.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 33, "cond": "baseline", "ref": 6.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 6.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 34, "cond": "baseline", "ref": 4.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 4.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 35, "cond": "baseline", "ref": 202.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 202.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 36, "cond": "baseline", "ref": 4.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 4.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 37, "cond": "baseline", "ref": 201.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 201.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 38, "cond": "baseline", "ref": 12000085.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 12000085.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 39, "cond": "baseline", "ref": 6.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 6.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 40, "cond": "baseline", "ref": 12.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 12.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 41, "cond": "baseline", "ref": 5.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 5.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 42, "cond": "baseline", "ref": 31.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 31.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 43, "cond": "baseline", "ref": 6.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 6.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 44, "cond": "baseline", "ref": 11.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 11.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 45, "cond": "baseline", "ref": 7.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 7.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 46, "cond": "baseline", "ref": 0.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 0.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 47, "cond": "baseline", "ref": 190.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 190.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 48, "cond": "baseline", "ref": 1076.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 1076.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 49, "cond": "baseline", "ref": 7.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 7.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 50, "cond": "baseline", "ref": 17.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 17.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 51, "cond": "baseline", "ref": 201.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 201.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 52, "cond": "baseline", "ref": 4.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 4.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 53, "cond": "baseline", "ref": 128.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 128.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 54, "cond": "baseline", "ref": 2.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 2.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 55, "cond": "baseline", "ref": 66.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 66.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 56, "cond": "baseline", "ref": 3.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 3.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 57, "cond": "baseline", "ref": 32.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 32.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 58, "cond": "baseline", "ref": 12.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 12.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 59, "cond": "baseline", "ref": 1.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 1.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 60, "cond": "baseline", "ref": 2.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 2.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 61, "cond": "baseline", "ref": 5636.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 5636.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 62, "cond": "baseline", "ref": 235.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 235.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 63, "cond": "baseline", "ref": 11.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 11.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 64, "cond": "baseline", "ref": 60.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "A:no-structured-object", "correct": false}
+{"i": 65, "cond": "baseline", "ref": 7.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 2.0, "fail": "A:no-structured-object", "correct": false}
+{"i": 66, "cond": "baseline", "ref": 53.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 53.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 67, "cond": "baseline", "ref": 12.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 12.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 68, "cond": "baseline", "ref": 88.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 88.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 69, "cond": "baseline", "ref": 16592.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "A:no-structured-object", "correct": false}
+{"i": 70, "cond": "baseline", "ref": 6.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 6.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 71, "cond": "baseline", "ref": 103.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 103.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 72, "cond": "baseline", "ref": 512.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "A:no-structured-object", "correct": false}
+{"i": 73, "cond": "baseline", "ref": 6.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 6.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 74, "cond": "baseline", "ref": 16.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 16.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 75, "cond": "baseline", "ref": 10901.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 10901.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 76, "cond": "baseline", "ref": 12.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 12.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 77, "cond": "baseline", "ref": 1.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 1.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 78, "cond": "baseline", "ref": 6.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 6.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 79, "cond": "baseline", "ref": 503.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "A:no-structured-object", "correct": false}
+{"i": 80, "cond": "baseline", "ref": 2000.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "A:no-structured-object", "correct": false}
+{"i": 81, "cond": "baseline", "ref": 13.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "A:no-structured-object", "correct": false}
+{"i": 82, "cond": "baseline", "ref": 7.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 7.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 83, "cond": "baseline", "ref": 8880.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 8880.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 84, "cond": "baseline", "ref": 4.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 4.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 85, "cond": "baseline", "ref": 1.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 1.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 86, "cond": "baseline", "ref": 2743.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 2743.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 87, "cond": "baseline", "ref": 1155.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "A:no-structured-object", "correct": false}
+{"i": 88, "cond": "baseline", "ref": 935.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 935.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 89, "cond": "baseline", "ref": 13.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "A:no-structured-object", "correct": false}
+{"i": 90, "cond": "baseline", "ref": 6152.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 6152.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 91, "cond": "baseline", "ref": 11.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 11.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 92, "cond": "baseline", "ref": 144.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 144.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 93, "cond": "baseline", "ref": 104.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 104.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 94, "cond": "baseline", "ref": 9.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 9.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 95, "cond": "baseline", "ref": 0.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 0.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 96, "cond": "baseline", "ref": 777.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 777.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 97, "cond": "baseline", "ref": 40.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 40.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 98, "cond": "baseline", "ref": 100.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 100.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 99, "cond": "baseline", "ref": 4.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 4.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 100, "cond": "baseline", "ref": 10.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 10.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 101, "cond": "baseline", "ref": 0.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 0.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 102, "cond": "baseline", "ref": 990.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 990.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 103, "cond": "baseline", "ref": -36.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": -36.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 104, "cond": "baseline", "ref": 46.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 46.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 105, "cond": "baseline", "ref": 8.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 8.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 106, "cond": "baseline", "ref": 24.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 24.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 107, "cond": "baseline", "ref": 97.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 97.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 108, "cond": "baseline", "ref": 3.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 3.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 109, "cond": "baseline", "ref": 3.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 3.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 110, "cond": "baseline", "ref": 2.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 2.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 111, "cond": "baseline", "ref": 10.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 10.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 112, "cond": "baseline", "ref": 100.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 100.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 113, "cond": "baseline", "ref": 5.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 5.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 114, "cond": "baseline", "ref": 16.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 16.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 115, "cond": "baseline", "ref": 7.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 7.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 116, "cond": "baseline", "ref": 8.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 8.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 117, "cond": "baseline", "ref": 109.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 109.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 118, "cond": "baseline", "ref": 42.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 42.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 119, "cond": "baseline", "ref": 8.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 8.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 120, "cond": "baseline", "ref": 8.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 8.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 121, "cond": "baseline", "ref": 7.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 7.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 122, "cond": "baseline", "ref": 4.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 4.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 123, "cond": "baseline", "ref": 3.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 3.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 124, "cond": "baseline", "ref": 11.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 11.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 125, "cond": "baseline", "ref": 64.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 64.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 126, "cond": "baseline", "ref": 0.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 0.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 127, "cond": "baseline", "ref": 10.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 10.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 128, "cond": "baseline", "ref": 129.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 129.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 129, "cond": "baseline", "ref": 321.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 321.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 130, "cond": "baseline", "ref": 42.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 42.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 131, "cond": "baseline", "ref": 7.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 7.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 132, "cond": "baseline", "ref": 222.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 222.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 133, "cond": "baseline", "ref": 17.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 17.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 134, "cond": "baseline", "ref": 66.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 66.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 135, "cond": "baseline", "ref": 6.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 6.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 136, "cond": "baseline", "ref": 3.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 3.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 137, "cond": "baseline", "ref": 48.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 48.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 138, "cond": "baseline", "ref": 13.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 13.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 139, "cond": "baseline", "ref": 8.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 8.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 140, "cond": "baseline", "ref": 10236.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 10236.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 141, "cond": "baseline", "ref": 7.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 7.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 142, "cond": "baseline", "ref": 40000.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 40000.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 143, "cond": "baseline", "ref": 611.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 611.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 144, "cond": "baseline", "ref": 4.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 4.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 145, "cond": "baseline", "ref": 14.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 14.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 146, "cond": "baseline", "ref": 1.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 1.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 147, "cond": "baseline", "ref": 6.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "A:no-structured-object", "correct": false}
+{"i": 148, "cond": "baseline", "ref": 11.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 11.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 149, "cond": "baseline", "ref": 12.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 12.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 150, "cond": "baseline", "ref": 2.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 2.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 151, "cond": "baseline", "ref": 4.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 4.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 152, "cond": "baseline", "ref": 7.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 8.0, "fail": "A:no-structured-object", "correct": false}
+{"i": 153, "cond": "baseline", "ref": 8.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 8.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 154, "cond": "baseline", "ref": 14.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 14.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 155, "cond": "baseline", "ref": 695.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 695.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 156, "cond": "baseline", "ref": 30.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 30.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 157, "cond": "baseline", "ref": 20.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 20.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 158, "cond": "baseline", "ref": 8.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 8.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 159, "cond": "baseline", "ref": 1241.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 1241.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 160, "cond": "baseline", "ref": 2.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 2.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 161, "cond": "baseline", "ref": 11.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 11.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 162, "cond": "baseline", "ref": 248.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 248.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 163, "cond": "baseline", "ref": 7.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "A:no-structured-object", "correct": false}
+{"i": 164, "cond": "baseline", "ref": 5.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 5.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 165, "cond": "baseline", "ref": 1.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 1.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 166, "cond": "baseline", "ref": 12.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 12.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 167, "cond": "baseline", "ref": 29.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 29.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 168, "cond": "baseline", "ref": 116.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 116.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 169, "cond": "baseline", "ref": 16.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 16.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 170, "cond": "baseline", "ref": 2.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 2.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 171, "cond": "baseline", "ref": 1.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 1.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 172, "cond": "baseline", "ref": 4.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 4.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 173, "cond": "baseline", "ref": 2.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 2.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 174, "cond": "baseline", "ref": 5.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 5.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 175, "cond": "baseline", "ref": 2.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 2.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 176, "cond": "baseline", "ref": 8.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 8.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 177, "cond": "baseline", "ref": 3.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 3.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 178, "cond": "baseline", "ref": 6.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 6.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 179, "cond": "baseline", "ref": 4.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 4.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 180, "cond": "baseline", "ref": 45.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 45.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 181, "cond": "baseline", "ref": 59.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 59.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 182, "cond": "baseline", "ref": 52.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 52.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 183, "cond": "baseline", "ref": 3255.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 3255.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 184, "cond": "baseline", "ref": 0.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "A:no-structured-object", "correct": false}
+{"i": 185, "cond": "baseline", "ref": 60.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 60.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 186, "cond": "baseline", "ref": 5.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 5.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 187, "cond": "baseline", "ref": 18.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 18.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 188, "cond": "baseline", "ref": 2079.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 2079.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 189, "cond": "baseline", "ref": 8.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 8.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 190, "cond": "baseline", "ref": 1.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 1.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 191, "cond": "baseline", "ref": 6.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 6.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 192, "cond": "baseline", "ref": 5.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 5.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 193, "cond": "baseline", "ref": 4096.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 4096.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 194, "cond": "baseline", "ref": 5.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 5.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 195, "cond": "baseline", "ref": 5.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": 5.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 1, "cond": "ir", "ref": 499.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "T:division-without-nonzero-proof", "correct": false}
+{"i": 2, "cond": "ir", "ref": 70.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "T:division-without-nonzero-proof", "correct": false}
+{"i": 3, "cond": "ir", "ref": 44.0, "error": false, "verifiable": true, "verified": true, "consistent": true, "predicted": 44.0, "fail": null, "ir_value": 44.0, "correct": true}
+{"i": 4, "cond": "ir", "ref": 1440.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 1995.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": false}
+{"i": 5, "cond": "ir", "ref": 6.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:b", "correct": false}
+{"i": 6, "cond": "ir", "ref": 18.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 18.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": true}
+{"i": 7, "cond": "ir", "ref": 129.0, "error": false, "verifiable": true, "verified": true, "consistent": false, "predicted": 57.0, "fail": "N:goal!=answer", "ir_value": 6.0, "correct": false}
+{"i": 8, "cond": "ir", "ref": 2.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 2.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": true}
+{"i": 9, "cond": "ir", "ref": 48.0, "error": false, "verifiable": true, "verified": true, "consistent": true, "predicted": 98.0, "fail": null, "ir_value": 98.0, "correct": false}
+{"i": 10, "cond": "ir", "ref": 10.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:k", "correct": false}
+{"i": 11, "cond": "ir", "ref": 1.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "T:division-without-nonzero-proof", "correct": false}
+{"i": 12, "cond": "ir", "ref": 71.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:k", "correct": false}
+{"i": 13, "cond": "ir", "ref": 12.0, "error": false, "verifiable": true, "verified": true, "consistent": true, "predicted": 40.0, "fail": null, "ir_value": 40.0, "correct": false}
+{"i": 14, "cond": "ir", "ref": 9.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:b", "correct": false}
+{"i": 15, "cond": "ir", "ref": 2220.0, "error": false, "verifiable": true, "verified": true, "consistent": false, "predicted": 2220.0, "fail": "N:goal!=answer", "ir_value": 30.0, "correct": true}
+{"i": 16, "cond": "ir", "ref": 12.0, "error": false, "verifiable": true, "verified": true, "consistent": true, "predicted": 4.0, "fail": null, "ir_value": 4.0, "correct": false}
+{"i": 17, "cond": "ir", "ref": 6.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:floor", "correct": false}
+{"i": 18, "cond": "ir", "ref": 21022.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:solve_lcm", "correct": false}
+{"i": 19, "cond": "ir", "ref": 25.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:digit", "correct": false}
+{"i": 20, "cond": "ir", "ref": 52.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:mod", "correct": false}
+{"i": 21, "cond": "ir", "ref": 9.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:goal-refs-undeclared:mod", "correct": false}
+{"i": 22, "cond": "ir", "ref": 8.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:number", "correct": false}
+{"i": 23, "cond": "ir", "ref": 13.0, "error": false, "verifiable": true, "verified": true, "consistent": false, "predicted": 13.0, "fail": "N:goal!=answer", "ir_value": 1.0, "correct": true}
+{"i": 24, "cond": "ir", "ref": 203.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "T:division-without-nonzero-proof", "correct": false}
+{"i": 25, "cond": "ir", "ref": 60.0, "error": false, "verifiable": true, "verified": true, "consistent": true, "predicted": 12.0, "fail": null, "ir_value": 12.0, "correct": false}
+{"i": 26, "cond": "ir", "ref": 236.0, "error": false, "verifiable": true, "verified": true, "consistent": false, "predicted": 236.0, "fail": "N:goal!=answer", "ir_value": 200.0, "correct": true}
+{"i": 27, "cond": "ir", "ref": 3.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:gcd", "correct": false}
+{"i": 28, "cond": "ir", "ref": 75.0, "error": false, "verifiable": true, "verified": true, "consistent": true, "predicted": 75.0, "fail": null, "ir_value": 75.0, "correct": true}
+{"i": 29, "cond": "ir", "ref": 17.0, "error": false, "verifiable": true, "verified": true, "consistent": true, "predicted": 9.0, "fail": null, "ir_value": 9.0, "correct": false}
+{"i": 30, "cond": "ir", "ref": 20.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:gcd", "correct": false}
+{"i": 31, "cond": "ir", "ref": 9.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 9.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": true}
+{"i": 32, "cond": "ir", "ref": 11189.0, "error": false, "verifiable": true, "verified": true, "consistent": false, "predicted": 11999.0, "fail": "N:goal!=answer", "ir_value": 10000.0, "correct": false}
+{"i": 33, "cond": "ir", "ref": 6.0, "error": false, "verifiable": true, "verified": true, "consistent": true, "predicted": 8.0, "fail": null, "ir_value": 8.0, "correct": false}
+{"i": 34, "cond": "ir", "ref": 4.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 2.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": false}
+{"i": 35, "cond": "ir", "ref": 202.0, "error": false, "verifiable": true, "verified": true, "consistent": true, "predicted": 4.0, "fail": null, "ir_value": 4.0, "correct": false}
+{"i": 36, "cond": "ir", "ref": 4.0, "error": false, "verifiable": true, "verified": true, "consistent": false, "predicted": 4.0, "fail": "N:goal!=answer", "ir_value": 0.0, "correct": true}
+{"i": 37, "cond": "ir", "ref": 201.0, "error": false, "verifiable": true, "verified": true, "consistent": false, "predicted": 3.0, "fail": "N:goal!=answer", "ir_value": 1.0, "correct": false}
+{"i": 38, "cond": "ir", "ref": 12000085.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:if", "correct": false}
+{"i": 39, "cond": "ir", "ref": 6.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:goal-refs-undeclared:mod", "correct": false}
+{"i": 40, "cond": "ir", "ref": 12.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:goal-refs-undeclared:mod", "correct": false}
+{"i": 41, "cond": "ir", "ref": 5.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:x", "correct": false}
+{"i": 42, "cond": "ir", "ref": 31.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:max", "correct": false}
+{"i": 43, "cond": "ir", "ref": 6.0, "error": false, "verifiable": true, "verified": true, "consistent": true, "predicted": 6.0, "fail": null, "ir_value": 6.0, "correct": true}
+{"i": 44, "cond": "ir", "ref": 11.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:min", "correct": false}
+{"i": 45, "cond": "ir", "ref": 7.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "T:division-without-nonzero-proof", "correct": false}
+{"i": 46, "cond": "ir", "ref": 0.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 12.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": false}
+{"i": 47, "cond": "ir", "ref": 190.0, "error": false, "verifiable": true, "verified": true, "consistent": true, "predicted": 190.0, "fail": null, "ir_value": 190.0, "correct": true}
+{"i": 48, "cond": "ir", "ref": 1076.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:mod", "correct": false}
+{"i": 49, "cond": "ir", "ref": 7.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 12.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": false}
+{"i": 50, "cond": "ir", "ref": 17.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:a", "correct": false}
+{"i": 51, "cond": "ir", "ref": 201.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:n", "correct": false}
+{"i": 52, "cond": "ir", "ref": 4.0, "error": false, "verifiable": true, "verified": true, "consistent": false, "predicted": 4.0, "fail": "N:goal!=answer", "ir_value": 0.0, "correct": true}
+{"i": 53, "cond": "ir", "ref": 128.0, "error": false, "verifiable": true, "verified": true, "consistent": false, "predicted": 150.0, "fail": "N:goal!=answer", "ir_value": 140.0, "correct": false}
+{"i": 54, "cond": "ir", "ref": 2.0, "error": false, "verifiable": true, "verified": true, "consistent": true, "predicted": 2.0, "fail": null, "ir_value": 2.0, "correct": true}
+{"i": 55, "cond": "ir", "ref": 66.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "T:division-without-nonzero-proof", "correct": false}
+{"i": 56, "cond": "ir", "ref": 3.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:gcd", "correct": false}
+{"i": 57, "cond": "ir", "ref": 32.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 32.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": true}
+{"i": 58, "cond": "ir", "ref": 12.0, "error": false, "verifiable": true, "verified": true, "consistent": true, "predicted": 8.0, "fail": null, "ir_value": 8.0, "correct": false}
+{"i": 59, "cond": "ir", "ref": 1.0, "error": false, "verifiable": true, "verified": true, "consistent": true, "predicted": 3.0, "fail": null, "ir_value": 3.0, "correct": false}
+{"i": 60, "cond": "ir", "ref": 2.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:mod", "correct": false}
+{"i": 61, "cond": "ir", "ref": 5636.0, "error": false, "verifiable": true, "verified": true, "consistent": true, "predicted": 5636.0, "fail": null, "ir_value": 5636.0, "correct": true}
+{"i": 62, "cond": "ir", "ref": 235.0, "error": false, "verifiable": true, "verified": true, "consistent": true, "predicted": 10.0, "fail": null, "ir_value": 10.0, "correct": false}
+{"i": 63, "cond": "ir", "ref": 11.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 11.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": true}
+{"i": 64, "cond": "ir", "ref": 60.0, "error": false, "verifiable": true, "verified": true, "consistent": false, "predicted": 60.0, "fail": "N:goal!=answer", "ir_value": 0.0, "correct": true}
+{"i": 65, "cond": "ir", "ref": 7.0, "error": false, "verifiable": true, "verified": true, "consistent": false, "predicted": 46.0, "fail": "N:goal!=answer", "ir_value": 2.0, "correct": false}
+{"i": 66, "cond": "ir", "ref": 53.0, "error": false, "verifiable": true, "verified": true, "consistent": true, "predicted": 53.0, "fail": null, "ir_value": 53.0, "correct": true}
+{"i": 67, "cond": "ir", "ref": 12.0, "error": false, "verifiable": true, "verified": true, "consistent": true, "predicted": 12.0, "fail": null, "ir_value": 12.0, "correct": true}
+{"i": 68, "cond": "ir", "ref": 88.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:gcd", "correct": false}
+{"i": 69, "cond": "ir", "ref": 16592.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:n", "correct": false}
+{"i": 70, "cond": "ir", "ref": 6.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "T:division-without-nonzero-proof", "correct": false}
+{"i": 71, "cond": "ir", "ref": 103.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:L", "correct": false}
+{"i": 72, "cond": "ir", "ref": 512.0, "error": false, "verifiable": true, "verified": true, "consistent": true, "predicted": 100.0, "fail": null, "ir_value": 100.0, "correct": false}
+{"i": 73, "cond": "ir", "ref": 6.0, "error": false, "verifiable": true, "verified": true, "consistent": false, "predicted": 6.0, "fail": "N:goal!=answer", "ir_value": 0.0, "correct": true}
+{"i": 74, "cond": "ir", "ref": 16.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "T:division-without-nonzero-proof", "correct": false}
+{"i": 75, "cond": "ir", "ref": 10901.0, "error": false, "verifiable": true, "verified": true, "consistent": true, "predicted": 10001.0, "fail": null, "ir_value": 10001.0, "correct": false}
+{"i": 76, "cond": "ir", "ref": 12.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:floor", "correct": false}
+{"i": 77, "cond": "ir", "ref": 1.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 1.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": true}
+{"i": 78, "cond": "ir", "ref": 6.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 6.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": true}
+{"i": 79, "cond": "ir", "ref": 503.0, "error": false, "verifiable": true, "verified": true, "consistent": false, "predicted": 504.0, "fail": "N:goal!=answer", "ir_value": 503.9189189189189, "correct": false}
+{"i": 80, "cond": "ir", "ref": 2000.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:n", "correct": false}
+{"i": 81, "cond": "ir", "ref": 13.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:b", "correct": false}
+{"i": 82, "cond": "ir", "ref": 7.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 7.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": true}
+{"i": 83, "cond": "ir", "ref": 8880.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:gcd", "correct": false}
+{"i": 84, "cond": "ir", "ref": 4.0, "error": false, "verifiable": true, "verified": true, "consistent": true, "predicted": 4.0, "fail": null, "ir_value": 4.0, "correct": true}
+{"i": 85, "cond": "ir", "ref": 1.0, "error": false, "verifiable": true, "verified": true, "consistent": false, "predicted": 1.0, "fail": "N:goal!=answer", "ir_value": 1.6666666666666667, "correct": true}
+{"i": 86, "cond": "ir", "ref": 2743.0, "error": false, "verifiable": true, "verified": true, "consistent": true, "predicted": 2743.0, "fail": null, "ir_value": 2743.0, "correct": true}
+{"i": 87, "cond": "ir", "ref": 1155.0, "error": false, "verifiable": true, "verified": true, "consistent": false, "predicted": 1155.0, "fail": "N:goal!=answer", "ir_value": 1111.0, "correct": true}
+{"i": 88, "cond": "ir", "ref": 935.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:X", "correct": false}
+{"i": 89, "cond": "ir", "ref": 13.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:mod", "correct": false}
+{"i": 90, "cond": "ir", "ref": 6152.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:sum_", "correct": false}
+{"i": 91, "cond": "ir", "ref": 11.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:k_a", "correct": false}
+{"i": 92, "cond": "ir", "ref": 144.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 144.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": true}
+{"i": 93, "cond": "ir", "ref": 104.0, "error": false, "verifiable": true, "verified": true, "consistent": true, "predicted": 104.0, "fail": null, "ir_value": 104.0, "correct": true}
+{"i": 94, "cond": "ir", "ref": 9.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 9.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": true}
+{"i": 95, "cond": "ir", "ref": 0.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 0.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": true}
+{"i": 96, "cond": "ir", "ref": 777.0, "error": false, "verifiable": true, "verified": true, "consistent": false, "predicted": 777.0, "fail": "N:goal!=answer", "ir_value": 111.0, "correct": true}
+{"i": 97, "cond": "ir", "ref": 40.0, "error": false, "verifiable": true, "verified": true, "consistent": true, "predicted": 40.0, "fail": null, "ir_value": 40.0, "correct": true}
+{"i": 98, "cond": "ir", "ref": 100.0, "error": false, "verifiable": true, "verified": true, "consistent": false, "predicted": 100.0, "fail": "N:goal!=answer", "ir_value": 123.0, "correct": true}
+{"i": 99, "cond": "ir", "ref": 4.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 4.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": true}
+{"i": 100, "cond": "ir", "ref": 10.0, "error": false, "verifiable": true, "verified": true, "consistent": false, "predicted": 7.0, "fail": "N:goal!=answer", "ir_value": 0.0, "correct": false}
+{"i": 101, "cond": "ir", "ref": 0.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:C", "correct": false}
+{"i": 102, "cond": "ir", "ref": 990.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 990.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": true}
+{"i": 103, "cond": "ir", "ref": -36.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": -36.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": true}
+{"i": 104, "cond": "ir", "ref": 46.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:x", "correct": false}
+{"i": 105, "cond": "ir", "ref": 8.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "T:division-without-nonzero-proof", "correct": false}
+{"i": 106, "cond": "ir", "ref": 24.0, "error": false, "verifiable": true, "verified": true, "consistent": true, "predicted": 24.0, "fail": null, "ir_value": 24.0, "correct": true}
+{"i": 107, "cond": "ir", "ref": 97.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:sqrt", "correct": false}
+{"i": 108, "cond": "ir", "ref": 3.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "T:division-without-nonzero-proof", "correct": false}
+{"i": 109, "cond": "ir", "ref": 3.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:mod", "correct": false}
+{"i": 110, "cond": "ir", "ref": 2.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "T:division-without-nonzero-proof", "correct": false}
+{"i": 111, "cond": "ir", "ref": 10.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 10.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": true}
+{"i": 112, "cond": "ir", "ref": 100.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:floor", "correct": false}
+{"i": 113, "cond": "ir", "ref": 5.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 0.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": false}
+{"i": 114, "cond": "ir", "ref": 16.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 16.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": true}
+{"i": 115, "cond": "ir", "ref": 7.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:max", "correct": false}
+{"i": 116, "cond": "ir", "ref": 8.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 9.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": false}
+{"i": 117, "cond": "ir", "ref": 109.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "T:division-without-nonzero-proof", "correct": false}
+{"i": 118, "cond": "ir", "ref": 42.0, "error": false, "verifiable": true, "verified": true, "consistent": false, "predicted": 39.0, "fail": "N:goal!=answer", "ir_value": 36.0, "correct": false}
+{"i": 119, "cond": "ir", "ref": 8.0, "error": false, "verifiable": true, "verified": true, "consistent": true, "predicted": 8.0, "fail": null, "ir_value": 8.0, "correct": true}
+{"i": 120, "cond": "ir", "ref": 8.0, "error": false, "verifiable": true, "verified": true, "consistent": true, "predicted": 4.0, "fail": null, "ir_value": 4.0, "correct": false}
+{"i": 121, "cond": "ir", "ref": 7.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:sum", "correct": false}
+{"i": 122, "cond": "ir", "ref": 4.0, "error": false, "verifiable": true, "verified": true, "consistent": false, "predicted": 16.0, "fail": "N:goal!=answer", "ir_value": 0.0, "correct": false}
+{"i": 123, "cond": "ir", "ref": 3.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 7.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": false}
+{"i": 124, "cond": "ir", "ref": 11.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:lcm", "correct": false}
+{"i": 125, "cond": "ir", "ref": 64.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:gcd", "correct": false}
+{"i": 126, "cond": "ir", "ref": 0.0, "error": false, "verifiable": true, "verified": true, "consistent": true, "predicted": 0.0, "fail": null, "ir_value": 0.0, "correct": true}
+{"i": 127, "cond": "ir", "ref": 10.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 10.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": true}
+{"i": 128, "cond": "ir", "ref": 129.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 147.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": false}
+{"i": 129, "cond": "ir", "ref": 321.0, "error": false, "verifiable": true, "verified": true, "consistent": true, "predicted": 321.0, "fail": null, "ir_value": 321.0, "correct": true}
+{"i": 130, "cond": "ir", "ref": 42.0, "error": false, "verifiable": true, "verified": true, "consistent": false, "predicted": 50.0, "fail": "N:goal!=answer", "ir_value": 41.666666666666664, "correct": false}
+{"i": 131, "cond": "ir", "ref": 7.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:goal-refs-undeclared:number", "correct": false}
+{"i": 132, "cond": "ir", "ref": 222.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 111.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": false}
+{"i": 133, "cond": "ir", "ref": 17.0, "error": false, "verifiable": true, "verified": true, "consistent": true, "predicted": 19.0, "fail": null, "ir_value": 19.0, "correct": false}
+{"i": 134, "cond": "ir", "ref": 66.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:N", "correct": false}
+{"i": 135, "cond": "ir", "ref": 6.0, "error": false, "verifiable": true, "verified": true, "consistent": true, "predicted": 1.0, "fail": null, "ir_value": 1.0, "correct": false}
+{"i": 136, "cond": "ir", "ref": 3.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:if", "correct": false}
+{"i": 137, "cond": "ir", "ref": 48.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "T:division-without-nonzero-proof", "correct": false}
+{"i": 138, "cond": "ir", "ref": 13.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:gcd", "correct": false}
+{"i": 139, "cond": "ir", "ref": 8.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 8.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": true}
+{"i": 140, "cond": "ir", "ref": 10236.0, "error": false, "verifiable": true, "verified": true, "consistent": false, "predicted": 10248.0, "fail": "N:goal!=answer", "ir_value": 10000.0, "correct": false}
+{"i": 141, "cond": "ir", "ref": 7.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 67.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": false}
+{"i": 142, "cond": "ir", "ref": 40000.0, "error": false, "verifiable": true, "verified": true, "consistent": true, "predicted": 200000.0, "fail": null, "ir_value": 200000.0, "correct": false}
+{"i": 143, "cond": "ir", "ref": 611.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "T:division-without-nonzero-proof", "correct": false}
+{"i": 144, "cond": "ir", "ref": 4.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 4.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": true}
+{"i": 145, "cond": "ir", "ref": 14.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 10.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": false}
+{"i": 146, "cond": "ir", "ref": 1.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:q", "correct": false}
+{"i": 147, "cond": "ir", "ref": 6.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:x", "correct": false}
+{"i": 148, "cond": "ir", "ref": 11.0, "error": false, "verifiable": true, "verified": true, "consistent": true, "predicted": 8.0, "fail": null, "ir_value": 8.0, "correct": false}
+{"i": 149, "cond": "ir", "ref": 12.0, "error": false, "verifiable": true, "verified": true, "consistent": true, "predicted": 12.0, "fail": null, "ir_value": 12.0, "correct": true}
+{"i": 150, "cond": "ir", "ref": 2.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 2.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": true}
+{"i": 151, "cond": "ir", "ref": 4.0, "error": false, "verifiable": true, "verified": true, "consistent": false, "predicted": 3.0, "fail": "N:goal!=answer", "ir_value": 0.0, "correct": false}
+{"i": 152, "cond": "ir", "ref": 7.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 7.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": true}
+{"i": 153, "cond": "ir", "ref": 8.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 8.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": true}
+{"i": 154, "cond": "ir", "ref": 14.0, "error": false, "verifiable": true, "verified": true, "consistent": false, "predicted": 14.0, "fail": "N:goal!=answer", "ir_value": 3570.0, "correct": true}
+{"i": 155, "cond": "ir", "ref": 695.0, "error": false, "verifiable": true, "verified": true, "consistent": true, "predicted": 695.0, "fail": null, "ir_value": 695.0, "correct": true}
+{"i": 156, "cond": "ir", "ref": 30.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "T:division-without-nonzero-proof", "correct": false}
+{"i": 157, "cond": "ir", "ref": 20.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:n", "correct": false}
+{"i": 158, "cond": "ir", "ref": 8.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 8.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": true}
+{"i": 159, "cond": "ir", "ref": 1241.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:and", "correct": false}
+{"i": 160, "cond": "ir", "ref": 2.0, "error": false, "verifiable": true, "verified": true, "consistent": true, "predicted": 1.0, "fail": null, "ir_value": 1.0, "correct": false}
+{"i": 161, "cond": "ir", "ref": 11.0, "error": false, "verifiable": true, "verified": true, "consistent": false, "predicted": 11.0, "fail": "N:goal!=answer", "ir_value": 0.0, "correct": true}
+{"i": 162, "cond": "ir", "ref": 248.0, "error": false, "verifiable": true, "verified": true, "consistent": true, "predicted": 248.0, "fail": null, "ir_value": 248.0, "correct": true}
+{"i": 163, "cond": "ir", "ref": 7.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:if", "correct": false}
+{"i": 164, "cond": "ir", "ref": 5.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "T:division-without-nonzero-proof", "correct": false}
+{"i": 165, "cond": "ir", "ref": 1.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "T:division-without-nonzero-proof", "correct": false}
+{"i": 166, "cond": "ir", "ref": 12.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:gcd", "correct": false}
+{"i": 167, "cond": "ir", "ref": 29.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:pow", "correct": false}
+{"i": 168, "cond": "ir", "ref": 116.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:mod", "correct": false}
+{"i": 169, "cond": "ir", "ref": 16.0, "error": false, "verifiable": true, "verified": true, "consistent": true, "predicted": 16.0, "fail": null, "ir_value": 16.0, "correct": true}
+{"i": 170, "cond": "ir", "ref": 2.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 0.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": false}
+{"i": 171, "cond": "ir", "ref": 1.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 1.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": true}
+{"i": 172, "cond": "ir", "ref": 4.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "T:division-without-nonzero-proof", "correct": false}
+{"i": 173, "cond": "ir", "ref": 2.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "T:division-without-nonzero-proof", "correct": false}
+{"i": 174, "cond": "ir", "ref": 5.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:sum_", "correct": false}
+{"i": 175, "cond": "ir", "ref": 2.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "T:division-without-nonzero-proof", "correct": false}
+{"i": 176, "cond": "ir", "ref": 8.0, "error": false, "verifiable": true, "verified": true, "consistent": true, "predicted": 8.0, "fail": null, "ir_value": 8.0, "correct": true}
+{"i": 177, "cond": "ir", "ref": 3.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "T:division-without-nonzero-proof", "correct": false}
+{"i": 178, "cond": "ir", "ref": 6.0, "error": false, "verifiable": true, "verified": true, "consistent": false, "predicted": 6.0, "fail": "N:goal!=answer", "ir_value": 0.0, "correct": true}
+{"i": 179, "cond": "ir", "ref": 4.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "T:division-without-nonzero-proof", "correct": false}
+{"i": 180, "cond": "ir", "ref": 45.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "T:division-without-nonzero-proof", "correct": false}
+{"i": 181, "cond": "ir", "ref": 59.0, "error": false, "verifiable": true, "verified": true, "consistent": false, "predicted": 54.0, "fail": "N:goal!=answer", "ir_value": 54.1, "correct": false}
+{"i": 182, "cond": "ir", "ref": 52.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 27.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": false}
+{"i": 183, "cond": "ir", "ref": 3255.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 3255.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": true}
+{"i": 184, "cond": "ir", "ref": 0.0, "error": false, "verifiable": true, "verified": true, "consistent": false, "predicted": 20.0, "fail": "N:goal!=answer", "ir_value": 0.0, "correct": false}
+{"i": 185, "cond": "ir", "ref": 60.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:m", "correct": false}
+{"i": 186, "cond": "ir", "ref": 5.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "T:division-without-nonzero-proof", "correct": false}
+{"i": 187, "cond": "ir", "ref": 18.0, "error": false, "verifiable": true, "verified": true, "consistent": false, "predicted": 18.0, "fail": "N:goal!=answer", "ir_value": 11.0, "correct": true}
+{"i": 188, "cond": "ir", "ref": 2079.0, "error": false, "verifiable": true, "verified": true, "consistent": false, "predicted": 2310.0, "fail": "N:goal!=answer", "ir_value": 2011.0, "correct": false}
+{"i": 189, "cond": "ir", "ref": 8.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "R:forward-or-unbound-ref:t", "correct": false}
+{"i": 190, "cond": "ir", "ref": 1.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 1.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": true}
+{"i": 191, "cond": "ir", "ref": 6.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 6.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": true}
+{"i": 192, "cond": "ir", "ref": 5.0, "error": false, "verifiable": true, "verified": true, "consistent": false, "predicted": 3.0, "fail": "N:goal!=answer", "ir_value": 0.0, "correct": false}
+{"i": 193, "cond": "ir", "ref": 4096.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 4096.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": true}
+{"i": 194, "cond": "ir", "ref": 5.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 5.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": true}
+{"i": 195, "cond": "ir", "ref": 5.0, "error": false, "verifiable": true, "verified": false, "consistent": false, "predicted": 5.0, "fail": "N:non-arithmetic-residue", "ir_value": null, "correct": true}

@@ -1,0 +1,4 @@
+{"i": 1, "ref": 499.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "A:no-structured-object", "correct": false}
+{"i": 2, "ref": 70.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "A:no-structured-object", "correct": false}
+{"i": 1, "ref": 499.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "A:malformed-json(Expecting value)", "correct": false}
+{"i": 2, "ref": 70.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "A:malformed-json(Expecting value)", "correct": false}

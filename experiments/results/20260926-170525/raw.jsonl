@@ -1,0 +1,6 @@
+{"i": 1, "ref": 18.0, "verifiable": false, "verified": false, "consistent": false, "predicted": 18.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 2, "ref": 3.0, "verifiable": false, "verified": false, "consistent": false, "predicted": 3.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 3, "ref": 70000.0, "verifiable": false, "verified": false, "consistent": false, "predicted": 70000.0, "fail": "A:no-structured-object", "correct": true}
+{"i": 1, "ref": 18.0, "verifiable": true, "verified": true, "consistent": true, "predicted": 18.0, "fail": null, "ir_value": 18.0, "correct": true}
+{"i": 2, "ref": 3.0, "verifiable": true, "verified": true, "consistent": true, "predicted": 3.0, "fail": null, "ir_value": 3.0, "correct": true}
+{"i": 3, "ref": 70000.0, "verifiable": true, "verified": true, "consistent": true, "predicted": 70000.0, "fail": null, "ir_value": 70000.0, "correct": true}

@@ -13,8 +13,8 @@
 *.run.xml
 *.bcf
 
-# 产物（如需把 PDF 入库则注释掉）
-paper/*.pdf
+# 论文成品 PDF **入库**：评审可不编译即看到排版结果
+# （原先被忽略，导致无法从仓库侧核验产物，已修正）
 
 # 系统
 .DS_Store
@@ -29,8 +29,11 @@ Thumbs.db
 tmp/
 temp/
 
-# 实验运行产物（原始数据与脚本入库，运行结果不入）
-experiments/results/
+# 实验运行结果**全部入库**（约 4 MB），使第三方可用 --rescore 独立复算：
+#   results/<run-id>/raw.jsonl       逐题打分记录（复核用）
+#   results/<run-id>/raw_full.jsonl  模型原始输出全量（审计用，详见 Day07 日志）
+#   results/<run-id>/summary.md|table.tex
+# 原先整目录被忽略，导致"实验管线缺少仓库佐证"，已修正。
 
 # 密钥（绝不入库）
 .env

@@ -1,0 +1,8 @@
+{"i": 1, "cond": "baseline", "ref": 18.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "A:no-structured-object", "correct": false}
+{"i": 2, "cond": "baseline", "ref": 3.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "A:no-structured-object", "correct": false}
+{"i": 3, "cond": "baseline", "ref": 70000.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "A:no-structured-object", "correct": false}
+{"i": 4, "cond": "baseline", "ref": 540.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "A:no-structured-object", "correct": false}
+{"i": 1, "cond": "ir", "ref": 18.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "A:malformed-json(Expecting value)", "correct": false}
+{"i": 2, "cond": "ir", "ref": 3.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "A:malformed-json(Expecting value)", "correct": false}
+{"i": 3, "cond": "ir", "ref": 70000.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "A:malformed-json(Expecting value)", "correct": false}
+{"i": 4, "cond": "ir", "ref": 540.0, "error": false, "verifiable": false, "verified": false, "consistent": false, "predicted": null, "fail": "A:malformed-json(Expecting value)", "correct": false}
